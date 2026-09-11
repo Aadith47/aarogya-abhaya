@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | AAROGYA ABHAYA</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(to right, #0f766e 60%, #ecfeff 40%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            width: 85%;
+            height: 80%;
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        /* LEFT SIDE */
+        .left-panel {
+            flex: 1;
+            background: #0f766e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 60px;
+            color: #ecfeff;
+        }
+
+        .left-panel h1 {
+            font-size: 48px;
+            text-shadow:
+                1px 1px 0 #0f172a,
+                2px 2px 0 #0f172a,
+                3px 3px 0 #0f172a;
+        }
+
+        .left-panel p {
+            margin-top: 20px;
+            font-size: 18px;
+            max-width: 420px;
+            color: #ccfbf1;
+        }
+
+        /* RIGHT SIDE */
+        .right-panel {
+            flex: 1;
+            background: #ecfeff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            width: 80%;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0f766e;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #134e4a;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #94a3b8;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-group input:focus {
+            border-color: #0f766e;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #22c55e;
+            border: none;
+            border-radius: 25px;
+            color: #022c22;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #0f766e;
+            font-weight: 500;
+        }
+
+        .form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #94a3b8;
+    margin-bottom: 8px;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    background: #0f766e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background: #115e59;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+            <h1>AAROGYA<br>ABHAYA</h1>
+            <p>
+               Bridging healthcare and technology to ensure accessible, transparent, and efficient health services.
+            </p>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <div class="login-box">
+                <h2>Login</h2>
+
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username" minlength="3" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter password" minlength="4" required>
+                </div>
+
+                <button class="login-btn" onclick="login()">Login</button>
+                <p style="margin-top:15px;text-align:center;">
+   Don't have an account?  
+  <a href="register.html" style="color:#2563eb;font-weight:600;">
+     Register Here
+  </a>
+</p>
+
+
+           <div class="back-link">
+    <a href="forgot-password.html">Forgot password?</a>
+</div>
+
+
+<div id="loginMessage" style="color:red; text-align:center; margin-top:10px; font-weight:500;"></div>
+                <div class="back-link">
+                    <a href="index.html">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+ 
+
+<!-- </script> -->
+<script>
+
+
+
+async function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msgDiv = document.getElementById("loginMessage");
+
+  msgDiv.innerText = ""; // Clear previous messages
+
+ if (!username || !password) {
+  msgDiv.innerText = "Please enter username and password.";
+  return;
+}
+
+if (username.length < 3) {
+  msgDiv.innerText = "Username must be at least 3 characters.";
+  return;
+}
+
+if (password.length < 4) {
+  msgDiv.innerText = "Password must be at least 4 characters.";
+  return;
+}
+
+  try {
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // Show backend error messages
+      msgDiv.innerText = data.error || "Login failed";
+      return;
+    }
+
+    // Save session info
+    localStorage.setItem("user_id", data.user_id);
+    localStorage.setItem("role", data.role);
+
+    // Redirect based on role
+    switch (data.role) {
+      case "asha_worker":
+        window.location.href = "/asha_dashboard.html";
+        break;
+      case "lha":
+        window.location.href = "/lha_dashboard.html";
+        break;
+      case "jpha":
+        window.location.href = "/jpha_dashboard.html";
+        break;
+      case "teenager":
+        window.location.href = "/teenager_dashboard.html";
+        break;
+      case "pregnant_woman":
+        window.location.href = "/pregnant_dashboard.html";
+        break;
+      case "newborn":
+        window.location.href = "/newborn_dashboard.html";
+        break;
+      default:
+        msgDiv.innerText = "Unknown role: " + data.role;
+    }
+
+  } catch (err) {
+    console.error(err);
+    msgDiv.innerText = "Server error. Try again later.";
+  }
+}
+
+</script>
+
+</body>
+</html>

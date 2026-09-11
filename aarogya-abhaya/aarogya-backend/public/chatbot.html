@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareBot | Aarogya Abhaya</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#fdf6f9;
+margin:0;
+}
+
+.chatbox{
+width:100%;
+height:520px;
+background:white;
+display:flex;
+flex-direction:column;
+border-radius:15px;
+}
+
+.chat-header{
+background:#14b8a6;
+color:white;
+padding:12px;
+text-align:center;
+font-weight:bold;
+}
+
+.messages{
+flex:1;
+padding:10px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+}
+
+.message{
+margin:8px 0;
+padding:10px;
+border-radius:10px;
+max-width:80%;
+font-size:14px;
+}
+
+.user{
+background:#ccfbf1;
+align-self:flex-end;
+text-align:right;
+}
+
+.bot{
+background:#e6e6ff;
+align-self:flex-start;
+}
+
+.input-area{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+.input-area input{
+flex:1;
+border:none;
+padding:12px;
+font-size:14px;
+outline:none;
+}
+
+.input-area button{
+background:#14b8a6;
+border:none;
+color:white;
+padding:10px 18px;
+cursor:pointer;
+}
+
+.input-area button:hover{
+background:#0f766e;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chatbox">
+
+<div class="chat-header">
+🤖 Aarogya Health Chatbot
+</div>
+
+<div class="messages" id="messages">
+
+<div class="message bot">
+Hello 👋  
+I am your **Aarogya Health Assistant**.  
+You can ask about:
+
+• Health advice  
+• Stress or mental wellbeing  
+• Women health  
+• Pregnancy or teenager health
+</div>
+
+</div>
+
+<div class="input-area">
+
+<input
+type="text"
+id="userInput"
+placeholder="Type your health question..."
+onkeypress="handleEnter(event)"
+>
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+function handleEnter(event){
+if(event.key === "Enter"){
+sendMessage();
+}
+}
+
+function addMessage(text, sender){
+
+const messagesDiv = document.getElementById("messages");
+
+const msg = document.createElement("div");
+msg.className = "message " + sender;
+
+msg.innerText = text;
+
+messagesDiv.appendChild(msg);
+
+messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+}
+
+async function sendMessage(){
+
+const input = document.getElementById("userInput");
+const message = input.value.trim();
+
+if(!message) return;
+
+addMessage(message,"user");
+
+input.value="";
+
+try{
+
+const response = await fetch("http://127.0.0.1:8000/chat",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:message
+})
+});
+
+const data = await response.json();
+
+addMessage(data.response,"bot");
+
+}catch(error){
+
+addMessage("⚠️ Chatbot server not running.","bot");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

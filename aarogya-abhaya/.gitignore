@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+
+# User uploads (generated at runtime)
+aarogya-backend/public/uploads/*
+!aarogya-backend/public/uploads/.gitkeep
+aarogya-backend/public/videos/*
+!aarogya-backend/public/videos/.gitkeep
+
+# Training data (large numpy files)
+pregnant-module/backend/training/*.npy
+pregnant-module/backend/sitting_posture_module/dataset/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+## GitHub Copilot Chat.md
+structureAbhava.txt

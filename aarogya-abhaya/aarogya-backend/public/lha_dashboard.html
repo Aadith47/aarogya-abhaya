@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LHA Dashboard | AAROGYA ABHAYA</title>
+
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ====== GENERAL ====== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{height:100vh;display:flex;background:linear-gradient(120deg,#ecfeff,#f0fdfa);}
+
+/* ====== LEFT PROFILE PANEL ====== */
+.profile-panel{
+    width:300px;background:linear-gradient(180deg,#0f766e,#115e59);color:white;padding:30px 20px;
+    display:flex;flex-direction:column;align-items:center;
+}
+.profile-pic-container{position:relative;width:130px;height:130px;margin-bottom:15px;}
+.profile-pic-container img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid white;}
+.change-photo-btn{position:absolute;bottom:5px;right:5px;width:38px;height:38px;background:#14b8a6;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.3s;}
+.change-photo-btn:hover{background:#0f766e;transform:scale(1.1);}
+.profile-name{font-size:22px;font-weight:600;}
+.profile-role{font-size:14px;color:#ccfbf1;margin-bottom:20px;}
+.profile-panel p{margin:5px 0;font-size:14px;}
+.profile-panel hr{margin:15px 0;border-color:#22c55e;}
+.logout-btn{margin-top:auto;width:100%;padding:12px;border:none;border-radius:20px;background:#ef4444;color:white;font-size:15px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.3s;}
+.logout-btn:hover{background:#dc2626;transform:translateY(-2px);}
+
+/* ====== RIGHT CONTENT PANEL ====== */
+.content-panel{flex:1;padding:35px;overflow-y:auto;}
+.menu{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px;}
+.menu button{padding:15px;border:none;border-radius:15px;background:white;cursor:pointer;font-size:16px;font-weight:500;color:#0f766e;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(0,0,0,0.12);transition:0.3s;}
+.menu button:hover{transform:translateY(-4px);}
+.menu button.active{background:#22c55e;color:#022c22;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* ====== CARDS ====== */
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+.card h2{color:#0f766e;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+thead{background:#0f766e;color:white;}
+th,td{padding:14px;text-align:left;}
+th{font-weight:600;font-size:14px;}
+tbody tr{border-bottom:1px solid #f0f0f0;}
+tbody tr:hover{background:#f9fafb;}
+.status-badge{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+.status-yellow{background:#fff5cc;color:#b26a00;}
+.status-green{background:#dcfce7;color:#15803d;}
+.status-red{background:#fee2e2;color:#b91c1c;}
+.action-btn{padding:6px 12px;background:#16a34a;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;transition:0.2s;}
+.action-btn:hover{background:#15803d;}
+.delete-btn{padding:6px 12px;background:#e74c3c;color:white;border:none;border-radius:6px;cursor:pointer;}
+.delete-btn:hover{background:#c0392b;}
+
+/* Responsive */
+@media(max-width:900px){.menu{grid-template-columns:repeat(2,1fr);}}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.profile-panel{
+    width:300px;
+    background:linear-gradient(180deg,#0f766e,#115e59);
+    color:white;
+    padding:30px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.profile-panel i{
+    color:#99f6e4;
+    margin-right:6px;
+}
+
+.profile-pic{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:white;
+    background-image:url("https://via.placeholder.com/130");
+    background-size:cover;
+    background-position:center;
+    border:5px solid #99f6e4;
+    margin-bottom:15px;
+}
+
+.profile-name{
+    font-size:22px;
+    font-weight:600;
+}
+
+.profile-role{
+    font-size:14px;
+    color:#ccfbf1;
+    margin-bottom:30px;
+}
+
+/* RIGHT CONTENT */
+.content-panel{
+    flex:1;
+    padding:35px;
+    overflow-y:auto;
+}
+
+.profile-pic img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+}
+/* PROFILE PHOTO STYLING */
+.profile-pic-container{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+}
+
+.profile-pic-container img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+}
+
+/* HIDE FILE INPUT */
+#photoInput{
+    display:none;
+}
+
+/* CAMERA BUTTON */
+.change-photo-btn{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    background:#14b8a6;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.change-photo-btn:hover{
+    background:#0f766e;
+    transform:scale(1.1);
+}
+
+.change-photo-btn i{
+    font-size:16px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat-card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.stat-card i{
+font-size:24px;
+color:#0f766e;
+margin-bottom:8px;
+}
+
+.stat-card h3{
+font-size:22px;
+color:#022c22;
+}
+
+.stat-card p{
+font-size:13px;
+color:#666;
+}
+
+.status-green{
+background:#d4edda;
+color:#155724;
+padding:4px 8px;
+border-radius:5px;
+}
+
+.status-red{
+background:#f8d7da;
+color:#721c24;
+padding:4px 8px;
+border-radius:5px;
+}
+
+.status-yellow{
+background:#fff3cd;
+color:#856404;
+padding:4px 8px;
+border-radius:5px;
+}
+
+.profile-panel{
+    width:300px;
+    background:linear-gradient(180deg,#0f766e,#115e59);
+    color:white;
+    padding:25px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-y:auto;
+    border-radius:20px;
+}
+
+.profile-card{
+    width:100%;
+    background:rgba(255,255,255,0.1);
+    padding:12px 15px;
+    margin:10px 0;
+    border-radius:12px;
+    backdrop-filter: blur(4px);
+}
+
+.profile-card p{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    margin:6px 0;
+    color:#e0f7f4;
+}
+
+.aarogya-info{
+    margin:15px 0;
+    text-align:center;
+    font-size:13px;
+    line-height:1.4;
+    color:#ccfbf1;
+    background:rgba(255,255,255,0.05);
+    padding:10px;
+    border-radius:10px;
+}
+
+.welcome-box {
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.welcome-box h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.welcome-box p {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.profile-panel {
+    width: 300px;
+    background: linear-gradient(180deg,#0f766e,#115e59);
+    color: white;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 20px;
+}
+
+.profile-card {
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.profile-card p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin: 6px 0;
+    color: #e0f7f4;
+}
+
+.aarogya-info {
+    margin: 15px 0;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #ccfbf1;
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #ccfbf1;
+    margin-bottom: 15px;
+}
+/* ====== PROFILE SECTION STYLING ====== */
+.profile-panel {
+    width: 300px;
+    background: linear-gradient(180deg, #0f766e, #115e59);
+    color: white;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* PROFILE PHOTO */
+.profile-pic-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+.profile-pic-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #99f6e4;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* NAME & ROLE */
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #ccfbf1;
+    margin-bottom: 15px;
+}
+
+/* PROFILE DETAILS BOX */
+.profile-details-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px 15px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.profile-details-box p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin: 8px 0;
+    color: #e0f7f4;
+}
+
+.profile-details-box i {
+    color: #99f6e4;
+}
+
+/* SMALL COUNTERS */
+.profile-panel p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+/* ABOUT SECTION */
+.about-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #ccfbf1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.about-card h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #22c55e;
+}
+
+/* SPACE MANAGEMENT */
+.profile-panel hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 12px 0;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LEFT PROFILE -->
+<div class="profile-panel">
+    <div class="profile-pic-container">
+        <img id="profilePhoto" src="https://via.placeholder.com/130">
+        <label for="photoInput" class="change-photo-btn"><i class="fa-solid fa-camera"></i></label>
+        <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto()">
+    </div>
+    <div class="profile-name" id="fullName">Loading...</div>
+    <div class="profile-role" id="role">Loading...</div>
+   
+<div class="profile-details-box">
+<p><i class="fa-solid fa-phone"></i> <strong>Phone:</strong> <span id="phone"></span></p>
+
+<p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <span id="email"></span></p>
+
+<p><i class="fa-solid fa-location-dot"></i> <strong>Area:</strong> <span id="area"></span></p>
+
+<p><i class="fa-solid fa-hospital"></i> <strong>Health Center:</strong> <span id="healthCenter"></span></p>
+</div>
+
+
+
+<div class="about-card">
+    <h4>🌿 About Aarogya Abhaya</h4>
+    <p>
+        Aarogya Abhaya is a community health initiative aimed at improving
+        awareness, healthcare access, and well-being for all.
+        We believe in preventive care and healthy living.
+    </p>
+</div>
+
+    <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+</div>
+<!-- RIGHT CONTENT -->
+<div class="content-panel">
+    <div class="welcome-box">
+    <h2>👋 Welcome, <span id="welcomeName">User</span>!</h2>
+    <p>Manage ASHA workers and beneficiaries efficiently.</p>
+</div>
+    <div class="stats">
+
+<div class="stat-card">
+<i class="fa-solid fa-user-nurse"></i>
+<h3 id="totalJpha">0</h3>
+<p>Total JPHAs</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-users"></i>
+<h3 id="totalAsha">0</h3>
+<p>Total ASHA Workers</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-user-plus"></i>
+<h3 id="totalBeneficiaries">0</h3>
+<p>Total Beneficiaries</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-clock"></i>
+<h3 id="pendingBeneficiaries">0</h3>
+<p>Pending Approvals</p>
+</div>
+
+</div>
+    <!-- MENU -->
+    <div class="menu">
+        <button class="active" onclick="showSection('jphas',this)">
+            <i class="fa-solid fa-users"></i> JPHAs
+        </button>
+        <button onclick="showSection('beneficiaries',this)">
+            <i class="fa-solid fa-user-plus"></i> Beneficiaries
+        </button>
+        <button onclick="showSection('ashaWorkers',this)">
+<i class="fa-solid fa-user-nurse"></i> ASHA Workers
+</button>
+<button onclick="showSection('approvedBeneficiaries', this)">
+    <i class="fa-solid fa-check"></i> Approved Beneficiaries
+</button>
+    </div>
+
+    <!-- JPHAs SECTION -->
+<div id="jphas" class="section active">
+    <div class="card">
+        <h2>👩‍⚕️ JPHAs under your supervision</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody id="jphaTableBody">
+                <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- BENEFICIARIES SECTION -->
+<div id="beneficiaries" class="section">
+    <div class="card">
+        <h2>🧑‍🍼 Beneficiaries Approved by JPHAs</h2>
+        <table>
+            <thead>
+               <tr>
+<th>Name</th>
+<th>Approved By</th>
+<th>Role</th>
+<th>Phone</th>
+<th>Address</th>
+<th>Age</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+            </thead>
+            <tbody id="beneficiaryTableBody">
+                <tr><td colspan="7">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="ashaWorkers" class="section">
+<div class="card">
+<h2>👩‍⚕️ ASHA Workers under your area</h2>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>JPHA</th>
+<th>Phone</th>
+<th>Email</th>
+</tr>
+</thead>
+
+<tbody id="ashaTableBody">
+<tr><td colspan="4">Loading...</td></tr>
+</tbody>
+
+</table>
+</div>
+
+</div>
+<div id="approvedBeneficiaries" class="section">
+    <div class="card">
+        <h2>✅ Approved Beneficiaries</h2>
+        <input type="text" id="searchApproved" placeholder="Search approved..." 
+            style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:1px solid #ddd"
+            onkeyup="searchApprovedBeneficiaries()">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Approved By</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody id="approvedBeneficiaryBody">
+                <tr><td colspan="6">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+<script>
+/* ====== LOAD PROFILE ====== */
+// async function loadProfile() {
+//     try {
+//         const res = await fetch("/me");
+//         if(!res.ok){ window.location.href="/login.html"; return; }
+//         const data = await res.json();
+//         document.getElementById("profilePhoto").src = data.profile_photo || "https://via.placeholder.com/130";
+//         document.getElementById("fullName").innerText = data.full_name || data.username;
+//         document.getElementById("role").innerText = data.role.replace("_"," ").toUpperCase();
+//         document.getElementById("email").innerText = data.email || "Not provided";
+//         document.getElementById("phone").innerText = data.phone || "Not provided";
+//         document.getElementById("area").innerText = data.area || "Assigned by Admin";
+//         document.getElementById("healthCenter").innerText = data.health_center || "PHC";
+//     } catch(err){ console.error(err); }
+// }
+// loadProfile();
+
+// async function uploadPhoto() {
+//     const file = document.getElementById("photoInput").files[0];
+//     if(!file) return;
+//     const fd = new FormData(); fd.append("photo",file);
+//     const res = await fetch("/upload-photo",{method:"POST",body:fd});
+//     const data = await res.json();
+//     if(data.success){ document.getElementById("profilePhoto").src = data.photo; alert("Profile photo updated"); } 
+//     else alert("Upload failed");
+// }
+async function loadProfile() {
+    try {
+        const res = await fetch("/me");
+
+        if(!res.ok){
+            window.location.href="/login.html";
+            return;
+        }
+
+        const data = await res.json();
+
+        document.getElementById("profilePhoto").src =
+            data.profile_photo || "https://via.placeholder.com/130";
+
+        document.getElementById("fullName").innerText =
+            data.full_name || data.username;
+
+        document.getElementById("role").innerText =
+            data.role.replace("_"," ").toUpperCase();
+
+        
+
+        document.getElementById("email").innerText =
+            data.email || "Not provided";
+
+        document.getElementById("phone").innerText =
+            data.phone || "Not provided";
+
+        document.getElementById("area").innerText =
+            data.area || "Assigned by Admin";
+
+        document.getElementById("healthCenter").innerText =
+            data.health_center || "PHC";
+
+        document.getElementById("welcomeName").innerText =
+    data.full_name || data.username || "User";
+
+    } catch(err){
+        console.error(err);
+    }
+}
+loadProfile();
+
+async function uploadPhoto() {
+    const file = document.getElementById("photoInput").files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    const res = await fetch("/upload-photo", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        document.getElementById("profilePhoto").src = data.photo;
+        alert("Profile photo updated");
+    } else {
+        alert("Upload failed");
+    }
+}
+
+
+async function logout() {
+    await fetch("/logout",{method:"POST"});
+    window.location.href="/login.html";
+}
+
+function showSection(id, btn){
+
+document.querySelectorAll('.section')
+.forEach(s=>s.classList.remove('active'));
+
+document.getElementById(id).classList.add('active');
+
+document.querySelectorAll('.menu button')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
+
+if(id==="jphas") loadJphas();
+if(id==="ashaWorkers") loadAshaWorkers();
+if(id==="beneficiaries") loadBeneficiaries();
+if(id==="approvedBeneficiaries") loadApprovedBeneficiaries();
+
+}
+
+/* ====== LOAD JPHAs ====== */
+async function loadJphas() {
+
+  try {
+
+    const res = await fetch("/lha/jphas", {
+      credentials: "same-origin"
+    });
+
+    const data = await res.json();
+
+    const tbody = document.getElementById("jphaTableBody");
+    tbody.innerHTML = "";
+
+    document.getElementById("totalJpha").innerText = data.length;
+
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4">No JPHAs found</td></tr>`;
+      return;
+    }
+
+    data.forEach(j => {
+
+      tbody.innerHTML += `
+      <tr>
+        <td>${j.full_name}</td>
+        <td>${j.email || "N/A"}</td>
+        <td>${j.phone || "N/A"}</td>
+        <td>${j.username}</td>
+      </tr>
+      `;
+
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    document.getElementById("jphaTableBody").innerHTML =
+      `<tr><td colspan="4">Error loading JPHAs</td></tr>`;
+
+  }
+}
+/* ====== LOAD BENEFICIARIES ====== */
+async function loadBeneficiaries() {
+
+  try {
+
+    const res = await fetch("/lha/beneficiaries", {
+      credentials: "same-origin"
+    });
+
+    const data = await res.json();
+
+    console.log("Beneficiaries:", data);
+
+    const tbody = document.getElementById("beneficiaryTableBody");
+    tbody.innerHTML = "";
+
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6">No beneficiaries found</td></tr>`;
+      return;
+    }
+
+    data.forEach(b => {
+
+  const age = b.dob ? calculateAge(b.dob) : "N/A";
+
+  let status = (b.lha_status || "pending").toLowerCase();
+let statusBadge = "";
+
+if(status === "approved"){
+  statusBadge = `<span class="status-green">Approved</span>`;
+}
+else if(status === "rejected"){
+  statusBadge = `<span class="status-red">Rejected</span>`;
+}
+else{
+  statusBadge = `<span class="status-yellow">Pending</span>`;
+}
+
+  let actionButtons = "";
+
+if(b.lha_status === "pending"){
+
+actionButtons = `
+<button class="action-btn"
+onclick="updateStatus(${b.id},'approved')">
+Approve
+</button>
+
+<button class="delete-btn"
+onclick="updateStatus(${b.id},'rejected')">
+Reject
+</button>
+`;
+
+}else{
+
+actionButtons = `<span>No Action</span>`;
+
+}
+  tbody.innerHTML += `
+<tr>
+<td>${b.full_name}</td>
+<td>${b.approved_by}</td>
+<td>${b.role}</td>
+<td>${b.phone || "N/A"}</td>
+<td>${b.address || "N/A"}</td>
+<td>${age}</td>
+<td>${statusBadge}</td>
+<td>${actionButtons}</td>
+</tr>
+`;
+
+});
+
+  } catch (err) {
+
+    console.error(err);
+
+    document.getElementById("beneficiaryTableBody").innerHTML =
+      `<tr><td colspan="6">Error loading beneficiaries</td></tr>`;
+
+  }
+
+}
+function calculateAge(dob){
+    const birth=new Date(dob); const today=new Date();
+    let years=today.getFullYear()-birth.getFullYear();
+    let months=today.getMonth()-birth.getMonth();
+    let days=today.getDate()-birth.getDate();
+    if(days<0){months--;days+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}
+    if(months<0){years--;months+=12;}
+    if(years===0){return `${months}m ${days}d`;}
+    return `${years}y`;
+}
+
+async function loadAshaWorkers(){
+
+try{
+
+const res = await fetch("/lha/asha-workers",{credentials:"same-origin"});
+const data = await res.json();
+
+const tbody = document.getElementById("ashaTableBody");
+tbody.innerHTML="";
+
+if(data.length===0){
+tbody.innerHTML=`<tr><td colspan="4">No ASHA workers found</td></tr>`;
+return;
+}
+
+document.getElementById("totalAsha").innerText = data.length;
+
+data.forEach(a=>{
+
+tbody.innerHTML += `
+<tr>
+<td>${a.full_name}</td>
+<td>${a.jpha_name}</td>
+<td>${a.phone || "N/A"}</td>
+<td>${a.email || "N/A"}</td>
+</tr>
+`;
+
+});
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("ashaTableBody").innerHTML =
+`<tr><td colspan="4">Error loading ASHA workers</td></tr>`;
+
+}
+
+}
+
+async function loadStats() {
+
+  try {
+
+    const res = await fetch("/lha/stats", {
+      credentials: "same-origin"
+    });
+
+    const data = await res.json();
+
+    console.log("Stats:", data);
+
+    document.getElementById("totalJpha").innerText =
+      data.total_jphas || 0;
+
+    document.getElementById("totalBeneficiaries").innerText =
+      data.total_beneficiaries || 0;
+
+    document.getElementById("pendingBeneficiaries").innerText =
+      data.pending_approvals || 0;
+
+  } catch (err) {
+
+    console.error("Stats load error:", err);
+
+  }
+
+}
+
+loadJphas();
+loadAshaWorkers();
+loadBeneficiaries();
+loadStats();
+
+async function updateStatus(id,status){
+
+const res = await fetch("/lha/update-beneficiary-status",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({id,status})
+});
+
+const data = await res.json();
+
+if(data.success){
+alert("Status updated");
+loadBeneficiaries();
+}else{
+alert("Failed");
+}
+
+}
+
+async function loadApprovedBeneficiaries() {
+    try {
+        const res = await fetch("/lha/beneficiaries", {credentials:"same-origin"});
+        const data = await res.json();
+        const approved = data.filter(b => b.lha_status === "approved");
+        const tbody = document.getElementById("approvedBeneficiaryBody");
+        tbody.innerHTML = "";
+
+        if(approved.length === 0){
+            tbody.innerHTML = `<tr><td colspan="6">No approved beneficiaries</td></tr>`;
+            return;
+        }
+
+        approved.forEach(b => {
+            const age = b.dob ? calculateAge(b.dob) : "N/A";
+            tbody.innerHTML += `
+            <tr>
+                <td>${b.full_name}</td>
+                <td>${b.approved_by}</td>
+                <td>${b.role}</td>
+                <td>${b.phone || "N/A"}</td>
+                <td>${b.address || "N/A"}</td>
+                <td>${age}</td>
+            </tr>`;
+        });
+    } catch(err){
+        console.error(err);
+    }
+}
+
+function searchApprovedBeneficiaries(){
+    const input = document.getElementById("searchApproved").value.toLowerCase();
+    const rows = document.querySelectorAll("#approvedBeneficiaryBody tr");
+    rows.forEach(r => {
+        const text = r.innerText.toLowerCase();
+        r.style.display = text.includes(input) ? "" : "none";
+    });
+}
+</script>
+
+</body>
+</html>

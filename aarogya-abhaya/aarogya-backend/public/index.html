@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AAROGYA ABHAYA</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f766e, #115e59);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 64px;
+            letter-spacing: 4px;
+            color: #ecfeff;
+            text-shadow:
+                1px 1px 0 #0f172a,
+                2px 2px 0 #0f172a,
+                3px 3px 0 #0f172a,
+                4px 4px 0 #0f172a;
+            margin-bottom: 40px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 50px;
+            color: #ccfbf1;
+        }
+
+        .login-btn {
+            padding: 14px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #22c55e;
+            color: #022c22;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #16a34a;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="title">AAROGYA ABHAYA</div>
+        <div class="subtitle">
+            Empowering Primary Healthcare Through Technology
+        </div>
+
+        <button class="login-btn" onclick="goToLogin()">
+            Login
+        </button>
+    </div>
+
+    <script>
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>

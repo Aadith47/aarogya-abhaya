@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ASHA Dashboard | AAROGYA ABHAYA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    background:linear-gradient(120deg,#ecfeff,#f0fdfa);
+}
+
+/* LEFT PROFILE */
+.profile-panel{
+    width:300px;
+    background:linear-gradient(180deg,#0f766e,#115e59);
+    color:white;
+    padding:30px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.profile-panel i{
+    color:#99f6e4;
+    margin-right:6px;
+}
+
+.profile-pic{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:white;
+    background-image:url("https://via.placeholder.com/130");
+    background-size:cover;
+    background-position:center;
+    border:5px solid #99f6e4;
+    margin-bottom:15px;
+}
+
+.profile-name{
+    font-size:22px;
+    font-weight:600;
+}
+
+.profile-role{
+    font-size:14px;
+    color:#ccfbf1;
+    margin-bottom:30px;
+}
+
+/* RIGHT CONTENT */
+.content-panel{
+    flex:1;
+    padding:35px;
+    overflow-y:auto;
+}
+
+/* MENU */
+.menu{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.menu button{
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:500;
+    color:#0f766e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    transition:0.3s;
+}
+
+.menu button:hover{
+    transform:translateY(-4px);
+}
+
+.menu button.active{
+    background:#22c55e;
+    color:#022c22;
+}
+
+/* SECTIONS */
+.section{display:none;}
+.section.active{display:block;}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+.card h2{
+    color:#0f766e;
+    margin-bottom:20px;
+}
+
+/* FORM */
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    font-weight:500;
+    color:#134e4a;
+}
+
+input, select, textarea{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border-radius:10px;
+    border:1px solid #94a3b8;
+}
+
+.action-btn{
+    margin-top:20px;
+    padding:12px 30px;
+    border:none;
+    border-radius:25px;
+    background:#22c55e;
+    font-size:16px;
+    font-weight:500;
+    cursor:pointer;
+}
+
+.action-btn:hover{
+    background:#16a34a;
+}
+
+.credentials{
+    background:#f0fdfa;
+    padding:15px;
+    border-radius:12px;
+    margin-top:20px;
+    display:none;
+}
+
+.profile-pic img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+}
+/* PROFILE PHOTO STYLING */
+.profile-pic-container{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+}
+
+.profile-pic-container img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+}
+
+/* HIDE FILE INPUT */
+#photoInput{
+    display:none;
+}
+
+/* CAMERA BUTTON */
+.change-photo-btn{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    background:#14b8a6;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.change-photo-btn:hover{
+    background:#0f766e;
+    transform:scale(1.1);
+}
+
+.change-photo-btn i{
+    font-size:16px;
+}
+
+/* tracking */
+/* TRACKING TABLE FIX */
+#tracking table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#tracking th,
+#tracking td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+#tracking th {
+    background: #ecfeff;
+    color: #0f766e;
+    font-weight: 600;
+}
+
+#tracking td {
+    color: #334155;
+}
+
+#tracking tr:hover {
+    background: #f0fdfa;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #0f766e;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #94a3b8;
+}
+
+/* pdf */
+.pdf-btn {
+    margin-top: 15px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.pdf-btn:hover {
+    background: linear-gradient(135deg, #1b5e20, #388e3c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.pdf-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-btn {
+    padding: 10px 18px;
+    background: #0f766e;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-btn:hover {
+    background: #115e59;
+}
+
+#fileName {
+    font-size: 14px;
+    color: #475569;
+}
+
+.menu button {
+    white-space: nowrap;      /* prevents line break */
+    font-size: 14px;          /* slightly smaller text */
+    gap: 6px;
+    padding: 14px 10px;
+}
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.video-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+}
+
+.video-card video {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.video-card h4 {
+    margin: 10px 0 5px;
+    font-size: 15px;
+    color: #0f766e;
+}
+
+.video-card p {
+    font-size: 13px;
+    color: #475569;
+}
+
+
+
+.notice-card {
+    background: #f0fdfa;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.notice-card small {
+    display: block;
+    color: #065f46;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.notice-board {
+    display: grid;
+    gap: 14px;
+}
+
+.notice-card {
+    background: linear-gradient(135deg, #ecfeff, #f0fdfa);
+    border-left: 6px solid #14b8a6;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.notice-msg {
+    font-size: 15px;
+    color: #134e4a;
+    line-height: 1.5;
+}
+
+.notice-meta {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #065f46;
+}
+#noticeMessage {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #94a3b8;
+    font-size: 14px;
+    margin-bottom: 12px;
+    resize: vertical;
+}
+
+#notice button,
+#notice .action-btn,
+#notice button {
+    padding: 12px 28px;
+    background: #14b8a6;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#notice button:hover {
+    background: #0f766e;
+}
+.notice-meta {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #065f46;
+    opacity: 0.85;
+}
+/* vaccination */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+    margin: 20px;
+}
+
+h2 {
+    color: #0f766e;
+    margin-bottom: 10px;
+}
+
+.alert-box {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.alert-box span {
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+#overdueCount {
+    background: #ffe5e5;
+    color: #c62828;
+}
+
+#dueCount {
+    background: #fff5cc;
+    color: #b26a00;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+thead {
+    background: #0f766e;
+    color: white;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+tbody tr:hover {
+    background: #f9fafb;
+}
+
+button {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #15803d;
+}
+
+.completed-badge {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-yellow {
+    background: #fff5cc;
+    color: #b26a00;
+}
+
+.status-orange {
+    background: #ffe5b4;
+    color: #d97706;
+}
+
+.status-green {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-red {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.notice-target{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.notice-target .label{
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.chip{
+    position: relative;
+    cursor: pointer;
+}
+
+.chip input{
+    display: none;
+}
+
+.chip span{
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #eef4f4;
+    border: 1px solid #d0dddd;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+.chip span:hover{
+    background: #e0eded;
+}
+
+/* When checkbox is selected */
+.chip input:checked + span{
+    background: #1abc9c;
+    color: white;
+    border-color: #1abc9c;
+}
+
+/* Special style for ALL */
+.chip.all input:checked + span{
+    background: #2ecc71;
+}
+
+.delete-btn{
+    margin-top:10px;
+    background:#e74c3c;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    background:#c0392b;
+}
+.notice-target{
+    margin-top:6px;
+    font-size:13px;
+    color:#444;
+}
+
+.notice-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f8fafc;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.notice-left{
+    flex:1;
+}
+
+.notice-msg{
+    font-size:15px;
+    font-weight:500;
+}
+
+.notice-right{
+    text-align:right;
+    font-size:12px;
+    color:#555;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.delete-btn{
+    background:transparent;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+    color:#888;
+    transition:0.2s;
+}
+
+.delete-btn:hover{
+    color:#e74c3c;
+    transform:scale(1.1);
+}
+/* ====== PROFILE SECTION STYLING ====== */
+.profile-panel {
+    width: 300px;
+    background: linear-gradient(180deg, #0f766e, #115e59);
+    color: white;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* PROFILE PHOTO */
+.profile-pic-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+.profile-pic-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #99f6e4;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* NAME & ROLE */
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #ccfbf1;
+    margin-bottom: 15px;
+}
+
+/* PROFILE DETAILS BOX */
+.profile-details-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px 15px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.profile-details-box p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin: 8px 0;
+    color: #e0f7f4;
+}
+
+.profile-details-box i {
+    color: #99f6e4;
+}
+
+/* SMALL COUNTERS */
+.profile-panel p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+/* ABOUT SECTION */
+.about-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #ccfbf1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.about-card h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #22c55e;
+}
+
+/* SPACE MANAGEMENT */
+.profile-panel hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 12px 0;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LEFT PROFILE -->
+<div class="profile-panel">
+
+    <div class="profile-pic-container">
+    <img id="profilePhoto" src="https://via.placeholder.com/130">
+
+    <label for="photoInput" class="change-photo-btn">
+        <i class="fa-solid fa-camera"></i>
+    </label>
+
+    <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto()">
+
+    
+
+</div>
+
+
+
+    <div class="profile-name" id="fullName">Loading...</div>
+<div class="profile-role" id="role">Loading...</div>
+
+<hr>
+
+<div class="profile-details-box">
+<p><i class="fa-solid fa-phone"></i> <strong>Phone:</strong> <span id="phone"></span></p>
+
+<p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <span id="email"></span></p>
+
+<p><i class="fa-solid fa-location-dot"></i> <strong>Area:</strong> <span id="area"></span></p>
+
+<p><i class="fa-solid fa-hospital"></i> <strong>Health Center:</strong> <span id="healthCenter"></span></p>
+</div>
+
+
+<div class="about-card">
+    <h4>🌿 About Aarogya Abhaya</h4>
+    <p>
+        Aarogya Abhaya is a community health initiative aimed at improving
+        awareness, healthcare access, and well-being for all.
+        We believe in preventive care and healthy living.
+    </p>
+</div>
+
+
+<button class="logout-btn" onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout </button>
+</div>
+
+
+<!-- RIGHT CONTENT -->
+<div class="content-panel">
+
+    <!-- MENU -->
+    <div class="menu">
+        <button class="active" onclick="showSection('register',this)">
+            <i class="fa-solid fa-user-plus"></i> Register
+        </button>
+        <button onclick="showSection('tracking',this)">
+    <i class="fa-solid fa-users"></i> Registered Beneficiaries
+</button>
+
+        <button onclick="showSection('notice',this)">
+            <i class="fa-solid fa-bullhorn"></i> Notice
+        </button>
+        <button onclick="showSection('settings',this)">
+            <i class="fa-solid fa-gear"></i> Settings
+        </button>
+        <button onclick="showSection('Upload',this)">
+            <i class="fa-solid fa-video"></i>Upload
+        </button>
+        <button onclick="showSection('vaccine',this)">
+            <i class="fa-solid fa-syringe"></i>Vaccination Tracking
+        </button>
+    </div>
+
+    <!-- REGISTER SECTION -->
+    <div id="register" class="section active">
+    <div class="card">
+        <h2><i class="fa-solid fa-user-plus"></i> Register Beneficiary</h2>
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Enter full name">
+        </div>
+
+        <div class="form-group">
+            <label>Date of Birth</label>
+<input type="date" id="dob" name="dob" max="" required>
+
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+<input type="email" id="regEmail" placeholder="Email address" required>
+
+
+        </div>
+        
+        <div class="form-group">
+            <label>Gender</label>
+            <select id="gender">
+                <option value="">-- Select --</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select id="category">
+                <option value="">-- Select --</option>
+                <option value="teenager">Teenager</option>
+                <option value="pregnant_woman">Pregnant Woman</option>
+                <option value="newborn">Newborn Baby</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Blood Group</label>
+            <select id="blood">
+                <option value="">-- Select --</option>
+                <option>A+</option><option>A-</option>
+                <option>B+</option><option>B-</option>
+                <option>AB+</option><option>AB-</option>
+                <option>O+</option><option>O-</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" step="0.1">
+        </div>
+
+
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" id="mobile" maxlength="10" pattern="[6-9]{1}[0-9]{9}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Emergency Contact</label>
+            <input type="text" id="emergency" maxlength="10" pattern="[6-9]{1}[0-9]{9}" >
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <textarea rows="2" id="address"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Area / Ward</label>
+<input type="text" id="regarea" placeholder="Enter ward or area" required>
+        </div>
+
+        <button class="action-btn" onclick="registerBeneficiary()">
+    Generate & Save Beneficiary
+
+</button>
+
+
+
+        <div class="credentials" id="credentialsBox">
+            <p><strong>Username:</strong> <span id="genUsername"></span></p>
+            <p><strong>Password:</strong> <span id="genPassword"></span></p>
+            <p style="color:#065f46;font-size:14px;">
+                Share these credentials securely with the beneficiary.
+            </p>
+               
+        </div>
+        <button id="pdfBtn" class="pdf-btn" onclick="generatePDF()" style="display:none;">
+    📄 Download Beneficiary PDF
+</button>
+
+    </div>
+</div>
+
+    <!-- TRACKING -->
+    <!-- TRACKING -->
+<div id="tracking" class="section">
+    <div class="card">
+        <h3>📋 Registered Beneficiaries</h3>
+
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+<th>Role</th>
+<th>Phone</th>
+<th>Age</th>
+<th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="trackingBody">
+                <tr>
+                    <td colspan="5">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="notice" class="section">
+<div class="card">
+
+<div class="notice-target">
+<span class="label">Send To:</span>
+
+<label class="chip">
+    <input type="checkbox" name="noticeRole" value="teenager">
+    <span>Teenager</span>
+</label>
+
+<label class="chip">
+    <input type="checkbox" name="noticeRole" value="pregnant_woman">
+    <span>Pregnant Woman</span>
+</label>
+
+<label class="chip">
+    <input type="checkbox" name="noticeRole" value="newborn">
+    <span>Newborn</span>
+</label>
+
+<label class="chip all">
+    <input type="checkbox" name="noticeRole" value="all">
+    <span>All</span>
+</label>
+
+</div>
+
+
+<textarea id="noticeMessage" placeholder="Enter notice message"></textarea>
+
+<button onclick="sendNotice()">Send Notice</button>
+<hr style="margin:20px 0">
+
+<h3>📢 Sent Notices</h3>
+<div id="noticeList" class="notice-board"></div>
+
+    </div>
+    
+</div>
+
+    <!-- SETTINGS -->
+    <div id="settings" class="section">
+        <div class="card">
+            <h2><i class="fa-solid fa-gear"></i> Settings</h2>
+            <p>Profile & password updates.</p>
+
+            <h3>🔐 Change Password</h3>
+
+<div class="form-group">
+    <label>Current Password</label>
+    <input type="password" id="currentPassword" placeholder="Enter current password">
+</div>
+
+<div class="form-group">
+    <label>New Password</label>
+    <input type="password" id="newPassword" placeholder="Enter new password">
+</div>
+
+<button class="action-btn" onclick="changePassword()">
+    Update Password
+</button>
+
+        </div>
+</div>
+
+<div id="Upload" class="section">
+        <div class="card">
+    <h3>🎥 Upload Recorded Class</h3>
+
+    <input type="text" id="videoTitle" placeholder="Video title"><br><br>
+
+    <textarea id="videoDesc" placeholder="Short description"></textarea><br><br>
+
+    <select id="videoCategory">
+        <option value="">Select category</option>
+        <option value="pregnant_woman">Pregnant Women</option>
+        <option value="teenager">Teenagers</option>
+    </select><br><br>
+
+  
+<div class="file-upload">
+    <label for="videoFile" class="file-btn">
+        <i class="fa-solid fa-file-video"></i> Choose Video
+    </label>
+    <span id="fileName">No file chosen</span>
+
+    <input type="file" id="videoFile" accept="video/mp4" onchange="showFileName()" hidden>
+</div>
+
+
+    <button class="action-btn" onclick="uploadVideo()">Upload Video</button>
+</div>
+<hr>
+
+<h4>📂 Uploaded Recorded Classes</h4>
+<div id="uploadedVideoList" class="video-grid">
+    <p>Loading uploaded videos...</p>
+
+    
+</div>
+
+
+    </div>   
+
+    <div id="vaccine" class="section">
+    <div class="card">
+        <h2>🍼 Newborn Vaccination Tracking</h2>
+
+<div class="alert-box">
+    <span id="overdueCount">🔴 Overdue: 0</span>
+    <span id="dueCount">🟡 Due This Week: 0</span>
+</div>
+
+<hr>
+
+<h3>Vaccination Records</h3>
+<div style="margin-bottom:15px;">
+    <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search newborn name..."
+    style="margin-bottom:15px; padding:8px; width:250px; border-radius:6px; border:1px solid #ccc;"
+>
+
+    <button onclick="filterVaccines()" 
+        style="padding:8px 12px; margin-left:5px; border-radius:6px; border:none; background:#0f766e; color:white;">
+        Search
+    </button>
+</div>
+<table id="vaccineTable">
+    <thead>
+        <tr>
+            <th>Newborn</th>
+            <th>Vaccine</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+    </div>
+</div>
+</div>
+
+<script >
+const dobInput = document.getElementById("dob");
+const today = new Date().toISOString().split("T")[0];
+dobInput.setAttribute("max", today);
+
+let allVaccines = [];
+
+async function loadVaccines() {
+
+    const res = await fetch("/asha/vaccinations");
+    const data = await res.json();
+
+    allVaccines = data; // store globally
+    renderTable(data);
+
+    
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchInput");
+
+    searchInput.addEventListener("input", function () {
+        filterVaccines();
+    });
+
+});
+function renderTable(data) {
+
+    const table = document.querySelector("#vaccineTable tbody");
+    table.innerHTML = "";
+
+    let overdue = 0;
+    let dueSoon = 0;
+
+    data.forEach(v => {
+
+        if(v.alert_status === "overdue") overdue++;
+        if(v.alert_status === "due_soon") dueSoon++;
+
+        const row = document.createElement("tr");
+
+        if(v.alert_status === "overdue") row.style.background = "#ffe5e5";
+        if(v.alert_status === "due_soon") row.style.background = "#fff5cc";
+
+        row.innerHTML = `
+            <td>${v.full_name}</td>
+            <td>${v.vaccine_name}</td>
+            <td>${v.due_date ? v.due_date.split("T")[0] : "N/A"}</td>
+            <td>${v.status}</td>
+            <td>
+                ${v.status === 'pending'
+                    ? `<button onclick="completeVaccine(${v.id})">Mark Completed</button>`
+                    : "✔ Completed"}
+            </td>
+        `;
+
+        table.appendChild(row);
+    });
+
+    document.getElementById("overdueCount").innerText =
+        `🔴 Overdue: ${overdue}`;
+
+    document.getElementById("dueCount").innerText =
+        `🟡 Due This Week: ${dueSoon}`;
+}
+
+function filterVaccines() {
+
+    const searchValue = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (searchValue === "") {
+        renderTable(allVaccines);
+        return;
+    }
+
+    const filtered = allVaccines.filter(v =>
+        v.full_name.toLowerCase().includes(searchValue)
+    );
+
+    renderTable(filtered);
+}
+
+async function completeVaccine(id) {
+
+    await fetch(`/asha/complete-vaccine/${id}`, {
+        method: "PUT"
+    });
+
+    await loadVaccines();
+
+    // Keep filtered result visible
+    filterVaccines();
+}
+
+loadVaccines();
+
+
+/* ---------------- REGISTER BENEFICIARY ---------------- */
+async function registerBeneficiary(){
+
+    const full_name = document.getElementById("name").value.trim();
+    const category = document.getElementById("category").value;
+    const phone = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("regEmail").value.trim(); // ✅ NEW
+    const dob = document.getElementById("dob").value;
+    const gender = document.getElementById("gender").value;
+const blood = document.getElementById("blood").value;
+const weight = document.getElementById("weight").value;
+const emergency = document.getElementById("emergency").value;
+const address = document.getElementById("address").value;
+const area = document.getElementById("regarea").value;
+    // Required fields
+if(!full_name || !category || !email){
+    alert("Name, Category and Email are required");
+    return;
+}
+
+// Name validation (no digits)
+const namePattern = /^[A-Za-z ]+$/;
+if(!namePattern.test(full_name)){
+    alert("Name should contain only letters.");
+    return;
+}
+
+// Phone validation (10 digits)
+const phonePattern = /^[6-9][0-9]{9}$/;
+if(!phonePattern.test(phone)){
+    alert("Please enter a valid 10-digit mobile number starting with 6,7,8 or 9.");
+    return;
+}
+
+// Emergency contact validation
+if(emergency && !phonePattern.test(emergency)){
+    alert("Please enter a valid 10-digit mobile number starting with 6,7,8 or 9.");
+    return;
+}
+
+// Email validation
+const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+if(!emailPattern.test(email)){
+    alert("Enter a valid email address.");
+    return;
+}
+
+// Weight validation
+if(weight && weight <= 0){
+    alert("Weight must be a positive number.");
+    return;
+}
+
+    const username =
+        full_name.split(" ")[0].toLowerCase() +
+        Math.floor(Math.random() * 1000);
+
+    const password = Math.random().toString(36).slice(-8);
+
+    try{
+        const res = await fetch("/register-beneficiary", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin", // ✅ important
+            body: JSON.stringify({
+    username,
+    password,
+    role: category,
+    full_name,
+    phone,
+    email,
+    dob,
+    gender,
+    blood_group: blood,
+    weight,
+    emergency_contact: emergency,
+    area,
+    address
+})
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.message || "Registration failed");
+            return;
+        }
+
+        document.getElementById("genUsername").innerText = username;
+        document.getElementById("genPassword").innerText = password;
+        document.getElementById("pdfBtn").style.display = "inline-block";
+
+        document.getElementById("credentialsBox").style.display = "block";
+
+
+        alert("Beneficiary registered successfully!");
+
+    }catch(err){
+        console.error(err);
+        alert("Server error");
+    }
+}
+
+
+/* ---------------- LOAD ASHA PROFILE ---------------- */
+async function loadProfile() {
+    try {
+        const res = await fetch("/me");
+
+        if(!res.ok){
+            window.location.href="/login.html";
+            return;
+        }
+
+        const data = await res.json();
+
+        document.getElementById("profilePhoto").src =
+            data.profile_photo || "https://via.placeholder.com/130";
+
+        document.getElementById("fullName").innerText =
+            data.full_name || data.username;
+
+        document.getElementById("role").innerText =
+            data.role.replace("_"," ").toUpperCase();
+
+        
+
+        document.getElementById("email").innerText =
+            data.email || "Not provided";
+
+        document.getElementById("phone").innerText =
+            data.phone || "Not provided";
+
+        document.getElementById("area").innerText =
+            data.area || "Assigned by Admin";
+
+        document.getElementById("healthCenter").innerText =
+            data.health_center || "PHC";
+
+        document.getElementById("welcomeName").innerText =
+    data.full_name || data.username || "User";
+
+    } catch(err){
+        console.error(err);
+    }
+}
+loadProfile();
+
+
+async function uploadPhoto() {
+    const file = document.getElementById("photoInput").files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    const res = await fetch("/upload-photo", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        document.getElementById("profilePhoto").src = data.photo;
+        alert("Profile photo updated");
+    } else {
+        alert("Upload failed");
+    }
+}
+
+// tracking
+async function loadTracking() {
+    try {
+        const res = await fetch("/asha/beneficiaries", {
+            credentials: "same-origin"
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        const body = document.getElementById("trackingBody");
+
+        body.innerHTML = "";
+
+        if (data.length === 0) {
+            body.innerHTML =
+                `<tr><td colspan="5">No beneficiaries registered yet</td></tr>`;
+            return;
+        }
+
+        data.forEach(b => {
+            const age = b.dob ? calculateAge(b.dob) : "N/A";
+
+           let statusClass = "";
+let statusText = "";
+
+// Rejected by JPHA
+if (b.approval_status === "rejected") {
+    statusClass = "status-red";
+    statusText = "Rejected by JPHA";
+}
+
+// Waiting for JPHA
+else if (b.approval_status === "pending") {
+    statusClass = "status-yellow";
+    statusText = "Pending JPHA Approval";
+}
+
+// Approved by JPHA but waiting for LHA
+else if (b.approval_status === "approved" && 
+        (!b.lha_status || b.lha_status === "pending")) {
+
+    statusClass = "status-orange";
+    statusText = "Pending LHA Approval";
+}
+
+// Fully approved
+else if (b.lha_status === "approved") {
+    statusClass = "status-green";
+    statusText = "Fully Approved";
+}
+
+// Rejected by LHA
+else if (b.lha_status === "rejected") {
+    statusClass = "status-red";
+    statusText = "Rejected by LHA";
+}
+body.innerHTML += `
+<tr>
+    <td>${b.full_name || b.username}</td>
+   <td>${b.role.replace("_"," ").replace(/\b\w/g,c=>c.toUpperCase())}</td>
+    <td>${b.phone || "N/A"}</td>
+    <td>${age}</td>
+    <td><span class="status-badge ${statusClass}">
+        ${statusText}
+    </span></td>
+</tr>
+`;
+        });
+
+    } catch (err) {
+        console.error("Tracking load error:", err);
+    }
+}
+
+
+// age calculation
+
+function calculateAge(dob){
+    const birth = new Date(dob);
+    const today = new Date();
+
+    let years = today.getFullYear() - birth.getFullYear();
+    let months = today.getMonth() - birth.getMonth();
+    let days = today.getDate() - birth.getDate();
+
+    if (days < 0) {
+        months--;
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    if (years === 0) {
+        return `${months}m ${days}d`;
+    }
+
+    return `${years}y`;
+}
+
+function showSection(id, btn) {
+    document.querySelectorAll('.section')
+        .forEach(s => s.classList.remove('active'));
+
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.menu button')
+        .forEach(b => b.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    // ✅ LOAD TRACKING DATA WHEN OPENED
+    if (id === "tracking") {
+        loadTracking();
+    }
+    if (id === "notice") {
+    loadNotices();
+}
+    if(id==="vaccine"){
+    loadNewborns();
+    loadAlerts();
+}
+}
+/* ---------------- POST NOTICE ---------------- */
+// async function postNotice() {
+//     const message = document.getElementById("noticeText").value.trim();
+
+//     if (!message) {
+//         alert("Please enter notice");
+//         return;
+//     }
+
+//     const res = await fetch("/notices", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ message })
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//         alert(data.message || "Failed to post notice");
+//         return;
+//     }
+
+//     alert("Notice posted successfully");
+//     document.getElementById("noticeText").value = "";
+// }
+async function sendNotice() {
+    const message = document.getElementById("noticeMessage").value.trim();
+
+    const selectedRoles = Array.from(
+        document.querySelectorAll("input[name='noticeRole']:checked")
+    ).map(cb => cb.value);
+
+    if (!message || selectedRoles.length === 0) {
+        alert("Select at least one category and enter message");
+        return;
+    }
+
+    const res = await fetch("/notices", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message,
+            targetRoles: selectedRoles
+        })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+        alert("Notice sent successfully");
+        document.getElementById("noticeMessage").value = "";
+        document.querySelectorAll("input[name='noticeRole']")
+            .forEach(cb => cb.checked = false);
+    } else {
+        alert(data.message || "Error");
+    }
+}
+
+
+/* ---------------- LOAD NOTICES ---------------- */
+async function loadNotices() {
+    const res = await fetch("/notices");
+    const data = await res.json();
+
+    const container = document.getElementById("noticeList");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No notices yet</p>";
+        return;
+    }
+
+   
+ data.forEach(n => {
+
+    let roles = "";
+
+    if (Array.isArray(n.target_roles)) {
+
+        // If "all" is selected
+        if (n.target_roles.includes("all")) {
+            roles = "All Beneficiaries";
+        } 
+        else {
+            roles = n.target_roles
+                .map(r => {
+                    if (r === "teenager") return "Teenager";
+                    if (r === "pregnant_woman") return "Pregnant Woman";
+                    if (r === "newborn") return "Newborn";
+                    return r;
+                })
+                .join(", ");
+        }
+    }
+
+   container.innerHTML += `
+<div class="notice-card">
+
+    <div class="notice-left">
+        <p class="notice-msg">${n.message}</p>
+    </div>
+
+    <div class="notice-right">
+        <span>👩‍⚕️ ${n.sender_name || "ASHA Worker"}</span>
+        <span>${new Date(n.created_at).toLocaleString()}</span>
+        <span>📌 ${roles}</span>
+
+        <button class="delete-btn" onclick="deleteNotice(${n.id})">
+            🗑 Delete
+        </button>
+    </div>
+
+</div>
+`;
+});
+
+}
+
+async function deleteNotice(id){
+
+    if(!confirm("Delete this notice?")) return;
+
+    const res = await fetch(`/notices/${id}`,{
+        method:"DELETE"
+    });
+
+    if(res.ok){
+        loadNotices();
+    }else{
+        alert("Failed to delete notice");
+    }
+}
+async function logout() {
+    await fetch("/logout", {
+        method: "POST"
+    });
+
+    window.location.href = "/login.html";
+}
+
+fetch("/me").then(res => {
+    if (!res.ok) window.location.href = "/login.html";
+});
+
+
+// change password
+async function changePassword() {
+    const currentPassword = document.getElementById("currentPassword").value.trim();
+    const newPassword = document.getElementById("newPassword").value.trim();
+
+    if (!currentPassword || !newPassword) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    const res = await fetch("/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        alert(data.message || "Password change failed");
+        return;
+    }
+
+    alert("Password changed successfully. Please login again.");
+    window.location.href = "/login.html";
+}
+
+// videos
+async function uploadVideo() {
+
+    if (!videoFile.files.length) {
+        alert("Please select a video file");
+        return;
+    }
+
+    if (!videoCategory.value) {
+        alert("Please select category");
+        return;
+    }
+
+    const fd = new FormData();
+    fd.append("title", videoTitle.value);
+    fd.append("description", videoDesc.value);
+    fd.append("category", videoCategory.value);
+    fd.append("video", videoFile.files[0]);
+
+    try {
+        const res = await fetch("/asha/upload-video", {
+            method: "POST",
+            credentials: "same-origin", // ✅ VERY IMPORTANT
+            body: fd
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.message || "Upload failed");
+            return;
+        }
+
+        alert("Video uploaded successfully");
+        loadUploadedVideos();   // 👈 ADD THIS
+
+
+        videoTitle.value = "";
+        videoDesc.value = "";
+        videoFile.value = "";
+
+    } catch (err) {
+        console.error(err);
+        alert("Server error");
+    }
+    if (id === "Upload") {
+    loadUploadedVideos();
+}
+
+}
+
+async function deleteVideo(id){
+
+    if(!confirm("Delete this video?")) return;
+
+    const res = await fetch(`/asha/delete-video/${id}`,{
+        method:"DELETE"
+    });
+
+    if(res.ok){
+        alert("Video deleted");
+        loadUploadedVideos();
+    }else{
+        alert("Delete failed");
+    }
+}
+// pdf
+
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const name     = document.getElementById("name").value;
+    const category = document.getElementById("category").value;
+    const phone    = document.getElementById("mobile").value;
+    const email    = document.getElementById("regEmail").value;
+    const username = document.getElementById("genUsername").innerText;
+    const password = document.getElementById("genPassword").innerText;
+
+    doc.setFontSize(18);
+    doc.text("AAROGYA ABHAYA", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text("Beneficiary Registration Details", 20, 30);
+
+    doc.line(20, 32, 190, 32);
+
+    doc.text(`Name       : ${name}`, 20, 45);
+    doc.text(`Category   : ${category}`, 20, 55);
+    doc.text(`Phone      : ${phone}`, 20, 65);
+    doc.text(`Email      : ${email}`, 20, 75);
+
+    doc.line(20, 80, 190, 80);
+
+    doc.text("Login Credentials", 20, 95);
+    doc.text(`Username   : ${username}`, 20, 105);
+    doc.text(`Password   : ${password}`, 20, 115);
+
+    doc.line(20, 125, 190, 125);
+
+    doc.text("Registered By ASHA Worker", 20, 140);
+    doc.text(`Date : ${new Date().toLocaleDateString()}`, 20, 150);
+
+    doc.save("beneficiary_details.pdf");
+}
+
+
+
+document.getElementById("videoFile").addEventListener("change", function () {
+    const fileName = this.files.length ? this.files[0].name : "No file chosen";
+    document.getElementById("fileName").innerText = fileName;
+});
+
+// uploaded videos
+async function loadUploadedVideos() {
+    const res = await fetch("/asha/my-videos");
+    const data = await res.json();
+
+    const container = document.getElementById("uploadedVideoList");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No videos uploaded yet</p>";
+        return;
+    }
+
+    data.forEach(v => {
+    container.innerHTML += `
+        <div class="video-card">
+
+            <strong>${v.title}</strong><br>
+
+            <small>
+                Category: ${v.category.replace("_"," ")} |
+                Uploaded: ${new Date(v.created_at).toLocaleString()}
+            </small>
+
+            <br><br>
+
+            <video width="280" controls>
+                <source src="${v.video_path}" type="video/mp4">
+            </video>
+
+            <br>
+
+            <button onclick="deleteVideo(${v.id})" class="delete-btn">
+                🗑 Delete
+            </button>
+
+        </div>
+    `;
+});
+}
+loadUploadedVideos();
+async function deleteVideo(id){
+
+    if(!confirm("Delete this video?")) return;
+
+    const res = await fetch(`/asha/delete-video/${id}`,{
+        method:"DELETE"
+    });
+
+    if(res.ok){
+        alert("Video deleted successfully");
+        loadUploadedVideos(); // refresh list
+    }else{
+        alert("Failed to delete video");
+    }
+}
+// show file name
+function showFileName() {
+    const input = document.getElementById("videoFile");
+    const fileNameSpan = document.getElementById("fileName");
+
+    if (input.files.length > 0) {
+        fileNameSpan.innerText = input.files[0].name;
+    } else {
+        fileNameSpan.innerText = "No file chosen";
+    }
+}
+videoFile.value = "";
+document.getElementById("fileName").innerText = "No file chosen";
+
+async function loadNewborns(){
+    const res = await fetch("/asha/newborns");
+    const data = await res.json();
+
+    const select = document.getElementById("newbornSelect");
+    select.innerHTML = "";
+
+    data.forEach(n=>{
+        select.innerHTML += 
+        `<option value="${n.id}">${n.full_name}</option>`;
+    });
+}
+
+setInterval(() => {
+    const trackingSection = document.getElementById("tracking");
+
+    if (trackingSection.classList.contains("active")) {
+        loadTracking();
+    }
+}, 10000);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teenager Dashboard | Aarogya Abhaya</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(120deg,#e0f7fa,#f0fdfa);
+    min-height:100vh;
+}
+
+.dashboard{
+    display:flex;
+    padding:25px;
+    gap:25px;
+}
+
+/* LEFT PROFILE */
+.profile{
+    width:280px;
+    background:linear-gradient(160deg,#0f766e,#14b8a6);
+    color:white;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
+
+.profile img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    display:block;
+    margin:0 auto 15px;
+    border:4px solid white;
+}
+
+.profile hr{
+    margin:18px 0;
+    border:1px solid rgba(255,255,255,0.3);
+}
+
+.profile ul{
+    list-style:none;
+}
+
+.profile ul li{
+    margin:12px 0;
+    font-size:14px;
+}
+
+.profile ul li i{
+    margin-right:8px;
+}
+
+#photoInput{
+    margin-top:10px;
+    color:white;
+}
+
+/* MAIN AREA */
+.main{
+    flex:1;
+    padding:10px;
+}
+
+/* HEADER */
+.header{
+    background:white;
+    padding:25px;
+    border-radius:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.12);
+}
+
+.header h1{
+    color:#0f766e;
+}
+
+.header p{
+    color:#555;
+    margin-top:5px;
+}
+
+/* ACTION BUTTONS */
+.action-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    margin-bottom:25px;
+}
+
+.action-card{
+    background:white;
+    padding:30px;
+    border-radius:22px;
+    text-align:center;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.action-card:hover{
+    transform:translateY(-8px);
+}
+
+.action-card i{
+    font-size:38px;
+    color:#14b8a6;
+    margin-bottom:15px;
+}
+
+/* FEATURES */
+.feature{
+    display:none;
+    background:white;
+    padding:25px;
+    border-radius:22px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+    margin-bottom:25px;
+}
+
+/* HEALTH CORNER */
+.health-corner{
+    margin-top:30px;
+}
+
+.health-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-bottom:25px;
+}
+
+.health-card{
+    background:linear-gradient(160deg,#ecfeff,#ffffff);
+    padding:25px;
+    border-radius:22px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+}
+
+.challenge{
+    margin-top:15px;
+    background:#ccfbf1;
+    padding:15px;
+    border-radius:15px;
+}
+
+.motivation{
+    background:linear-gradient(160deg,#ccfbf1,#99f6e4);
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+}
+/* PROFILE PHOTO STYLING */
+.profile-pic-container{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+}
+
+.profile-pic-container img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+}
+
+/* HIDE FILE INPUT */
+#photoInput{
+    display:none;
+}
+
+/* CAMERA BUTTON */
+.change-photo-btn{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    background:#14b8a6;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.change-photo-btn:hover{
+    background:#0f766e;
+    transform:scale(1.1);
+}
+
+.change-photo-btn i{
+    font-size:16px;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #0f766e;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #94a3b8;
+}
+
+/* SETTINGS FEATURE CARD */
+#settings {
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+    max-width: 420px;
+}
+
+/* HEADINGS */
+#settings h3 {
+    color: #0f766e;
+    margin-bottom: 15px;
+}
+
+/* FORM GROUP */
+#settings .form-group {
+    margin-bottom: 16px;
+}
+
+/* LABEL */
+#settings label {
+    display: block;
+    font-weight: 500;
+    color: #134e4a;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* INPUT */
+#settings input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #94a3b8;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* INPUT FOCUS */
+#settings input:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20,184,166,0.2);
+}
+
+/* UPDATE BUTTON */
+#settings .action-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #022c22;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+#settings .action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(34,197,94,0.4);
+}
+
+/* BUTTON ACTIVE */
+#settings .action-btn:active {
+    transform: scale(0.98);
+}
+#settings hr {
+    margin: 20px 0;
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+}
+.dashboard-video {
+    width: 100%;
+    max-width: 420px;
+    height: 240px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.video-card {
+    padding: 15px;
+    background: #f0fdfa;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.video-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+}
+
+.video-card video {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.video-card h4 {
+    margin: 10px 0 5px;
+    font-size: 15px;
+    color: #0f766e;
+}
+
+.video-card p {
+    font-size: 13px;
+    color: #475569;
+}
+
+.beneficiary-details p{
+    font-size:14px;
+    margin:6px 0;
+}
+
+.welcome-card{
+    margin-top:20px;
+    background: rgba(255,255,255,0.15);
+    padding:18px;
+    border-radius:16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    text-align:center;
+}
+
+.welcome-card h3{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:8px;
+    line-height:1.4;
+}
+
+.welcome-card span{
+    color:#bbf7d0;
+}
+
+.welcome-card p{
+    font-size:13px;
+    line-height:1.5;
+    opacity:0.9;
+}
+#fullName{
+    text-align:center;
+    margin-top:10px;
+    font-weight:600;
+}
+#role{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:1px;
+    opacity:0.9;
+    margin-bottom:10px;
+}
+
+/* notices */
+/* NOTICE LIST */
+#noticeList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+/* INDIVIDUAL NOTICE CARD */
+.notice-card {
+    background: linear-gradient(160deg, #ecfeff, #ffffff);
+    padding: 16px 18px;
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    border-left: 6px solid #14b8a6;
+    transition: 0.3s ease;
+}
+
+.notice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+/* NOTICE TEXT */
+.notice-card p {
+    font-size: 15px;
+    color: #134e4a;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* NOTICE FOOTER */
+.notice-card small {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    text-align: right;
+}
+
+.notice-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f0fdfa;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.notice-message{
+    font-size:15px;
+    color:#333;
+    max-width:65%;
+}
+
+.notice-info{
+    text-align:right;
+    font-size:13px;
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- LEFT PROFILE -->
+    <div class="profile">
+        <div class="profile-pic-container">
+            <img id="profilePhoto" src="https://via.placeholder.com/130">
+
+            <label for="photoInput" class="change-photo-btn">
+                <i class="fa-solid fa-camera"></i>
+            </label>
+
+            <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto()">
+        </div>
+
+        <h2 id="fullName">Loading...</h2>
+        <p id="role">Loading...</p>
+
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Phone:</strong> <span id="phone"></span></p>
+        <p><strong>Age:</strong> <span id="age"></span></p>
+        
+
+        <hr>
+
+        <!-- NEW: Beneficiary Details -->
+        <!-- <div class="beneficiary-details"> -->
+
+            <p><strong>DOB:</strong> <span id="dob"></span></p>
+           
+            <p><strong>Blood Group:</strong> <span id="bloodGroup"></span></p>
+            
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Area:</strong> <span id="area"></span></p>
+
+        <!-- </div> -->
+<hr>
+        <div class="welcome-card">
+            <h3>👋 Welcome back, <span id="welcomeName"></span>!</h3>
+            <p>
+                Stay consistent with your healthy habits.
+                Every small step matters 💚
+            </p>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <div class="header">
+            <h1>WELCOME TO AAROGYA ABHAYA</h1>
+            <p>Your health, education, and well-being in one place</p>
+        </div>
+
+        <div class="action-grid">
+            <div class="action-card" onclick="showFeature('chatbot')">
+                <i class="fa-solid fa-robot"></i>
+                <h3>Health Chatbot</h3>
+                <p>Ask questions safely</p>
+            </div>
+
+            <div class="action-card" onclick="showFeature('notice')">
+                <i class="fa-solid fa-bullhorn"></i>
+                <h3>Notice Board</h3>
+                <p>View announcements</p>
+            </div>
+
+            <div class="action-card" onclick="showFeature('classes')">
+                <i class="fa-solid fa-video"></i>
+                <h3>Recorded Classes</h3>
+                <p>Health education videos</p>
+            </div>
+
+            <div class="action-card" onclick="showFeature('settings')">
+                <i class="fa-solid fa-gear"></i>
+                <h3>Settings</h3>
+                <p>Account preferences</p>
+            </div>
+        </div>
+
+       <div id="chatbot" class="feature">
+    <h3>🤖 Health Chatbot</h3>
+
+    <iframe
+        src="/chatbot.html"
+        width="380"
+        height="520"
+        style="border:none;border-radius:15px;">
+    </iframe>
+
+</div>
+
+        <div id="notice" class="feature">
+    <h3>📢 Notice Board</h3>
+    <div id="noticeList">Loading notices...</div>
+</div>
+
+
+        <div id="classes" class="feature">
+            <h3>🎥 Recorded Classes</h3>
+            <div id="videoList" class="video-grid">Loading videos...</div>
+            
+
+        </div>
+
+        <div id="settings" class="feature">
+    <h3>⚙️ Settings</h3>
+    <h3>🔐 Change Password</h3>
+
+    <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" id="currentPassword" placeholder="Enter current password">
+    </div>
+
+    <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="newPassword" placeholder="Enter new password">
+    </div>
+
+    <button type="button" class="action-btn" onclick="changePassword()">
+        Update Password
+    </button>
+</div>
+
+
+        <!-- HEALTH CORNER -->
+        <div class="health-corner">
+            <div class="health-grid">
+                <div class="health-card">
+                    <h3>🌱 Thought for Today</h3>
+                    <p id="healthQuote"></p>
+                    <p class="challenge"><strong>💡 Today’s Challenge:</strong><br>
+                        <span id="dailyChallenge"></span>
+                    </p>
+                </div>
+
+                <div class="health-card">
+                    <h3>✅ Healthy Habits</h3>
+                    <ul>
+                        <li>🥗 Eat balanced meals</li>
+                        <li>💧 Stay hydrated</li>
+                        <li>😴 Get enough sleep</li>
+                        <li>🚫 Avoid junk food</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation">
+                <h3>🌟 Did You Know?</h3>
+                <p>Regular physical activity improves confidence and mental health.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function showFeature(id){
+    document.querySelectorAll('.feature').forEach(f=>f.style.display='none');
+    document.getElementById(id).style.display='block';
+
+    if(id === "notice"){
+        loadNotices();
+    }
+}
+
+// fetch("/me")
+//   .then(res => res.json())
+//   .then(data => {
+//       document.getElementById("welcomeName").innerText = data.full_name;
+//  document.getElementById("area").innerText = data.area || "Not assigned";
+//     });
+
+
+
+function startSquat(){
+    fetch("/start-squat")
+    .then(res => res.text())
+    .then(data => alert(data))
+}
+
+function startSitting(){
+    console.log("Sitting button clicked");
+
+    fetch("/start-sitting")
+    .then(res => res.text())
+    .then(data => {
+        console.log(data);
+        alert(data);
+    })
+}
+
+
+
+
+
+
+
+function calculateAge(dob){
+    const birth = new Date(dob);
+    const today = new Date();
+
+    let years = today.getFullYear() - birth.getFullYear();
+    let months = today.getMonth() - birth.getMonth();
+    let days = today.getDate() - birth.getDate();
+
+    if (days < 0) {
+        months--;
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    if (years === 0) {
+        return `${months} months ${days} days`;
+    }
+
+    return `${years} years`;
+}
+
+
+
+async function loadProfile(){
+    const res = await fetch("/me");
+    if(!res.ok){
+        location.href="/login.html";
+        return;
+    }
+
+    const u = await res.json();
+
+    fullName.innerText = u.full_name || "Not provided";
+    welcomeName.innerText = u.full_name || "";
+    role.innerText = u.role.replace("_"," ").toUpperCase();
+
+    username.innerText = u.username || "N/A";
+    email.innerText = u.email || "N/A";
+    phone.innerText = u.phone || "N/A";
+
+    // AGE
+    if (u.dob) {
+        age.innerText = calculateAge(u.dob);
+    } else {
+        age.innerText = "N/A";
+    }
+
+    // DOB
+if(document.getElementById("dob")){
+    document.getElementById("dob").innerText =
+        u.dob ? new Date(u.dob).toLocaleDateString() : "N/A";
+}
+
+// Blood group
+if(document.getElementById("bloodGroup")){
+    document.getElementById("bloodGroup").innerText =
+        u.blood_group || "N/A";
+}
+
+// Address
+if(document.getElementById("address")){
+    document.getElementById("address").innerText =
+        u.address || "N/A";
+}
+if(document.getElementById("area")){
+document.getElementById("area").innerText =
+u.area || "Not assigned";
+}
+     document.getElementById("profilePhoto").src =
+            u.profile_photo || "https://via.placeholder.com/130";
+}
+
+async function uploadPhoto(){
+    const f=photoInput.files[0];
+    if(!f)return;
+    const fd=new FormData();
+    fd.append("photo",f);
+    const r=await fetch("/upload-photo",{method:"POST",body:fd});
+    const d=await r.json();
+    if(d.success)profilePhoto.src=d.photo;
+}
+
+const quotes=[
+"Your health is your superpower.",
+"Strong mind, healthy body.",
+"Small steps build strong futures."
+];
+const challenges=[
+"Drink 8 glasses of water 💧",
+"Walk for 20 minutes 🚶‍♀️",
+"Eat one fruit 🍎"
+];
+healthQuote.innerText=quotes[Math.floor(Math.random()*quotes.length)];
+dailyChallenge.innerText=challenges[Math.floor(Math.random()*challenges.length)];
+
+loadProfile();
+
+
+
+// notices
+async function loadNotices() {
+    const res = await fetch("/notices");
+    const data = await res.json();
+
+    const container = document.getElementById("noticeList");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No notices yet</p>";
+        return;
+    }
+
+    data.forEach(n => {
+       container.innerHTML += `
+<div class="notice-card">
+
+    <div class="notice-message">
+        ${n.message}
+    </div>
+
+    <div class="notice-info">
+        <div>👤 ${n.sender_name || "ASHA"}</div>
+        <div>
+            📅 ${new Date(n.created_at).toLocaleDateString()}
+            ⏰ ${new Date(n.created_at).toLocaleTimeString()}
+        </div>
+    </div>
+
+</div>
+`;
+    });
+}
+loadNotices();
+
+
+async function logout() {
+    await fetch("/logout", {
+        method: "POST"
+    });
+
+    window.location.href = "/login.html";
+}
+
+fetch("/me").then(res => {
+    if (!res.ok) window.location.href = "/login.html";
+});
+
+
+// change password
+async function changePassword() {
+    console.log("Change password clicked");
+
+    const currentPassword =
+        document.getElementById("currentPassword").value.trim();
+    const newPassword =
+        document.getElementById("newPassword").value.trim();
+
+    if (!currentPassword || !newPassword) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    const res = await fetch("/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+            currentPassword,
+            newPassword
+        })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        alert(data.message || "Password change failed");
+        return;
+    }
+
+    alert("Password updated successfully");
+    window.location.href = "/login.html";
+}
+
+
+loadVideos("teenager");
+
+async function loadVideos() {
+    const res = await fetch("/videos/teenager");
+    const videos = await res.json();
+
+    const container = document.getElementById("videoList");
+    container.innerHTML = "";
+
+    if (videos.length === 0) {
+        container.innerHTML = "<p>No videos available</p>";
+        return;
+    }
+
+    videos.forEach(v => {
+       container.innerHTML += `
+    <div class="video-card">
+        <h4>${v.title}</h4>
+        <video class="dashboard-video" controls>
+            <source src="${v.video_path}" type="video/mp4">
+        </video>
+        <p>${v.description || ""}</p>
+    </div>
+`;
+
+    });
+}
+
+loadVideos();
+
+
+
+</script>
+
+</body>
+</html>

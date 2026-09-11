@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JPHA Dashboard | AAROGYA ABHAYA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ====== GENERAL ====== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{height:100vh;display:flex;background:linear-gradient(120deg,#ecfeff,#f0fdfa);}
+
+/* ====== LEFT PROFILE PANEL ====== */
+.profile-panel{
+    width:300px;background:linear-gradient(180deg,#0f766e,#115e59);color:white;padding:30px 20px;
+    display:flex;flex-direction:column;align-items:center;
+}
+.profile-pic-container{position:relative;width:130px;height:130px;margin-bottom:15px;}
+.profile-pic-container img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid white;}
+.change-photo-btn{position:absolute;bottom:5px;right:5px;width:38px;height:38px;background:#14b8a6;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.3s;}
+.change-photo-btn:hover{background:#0f766e;transform:scale(1.1);}
+.profile-name{font-size:22px;font-weight:600;}
+.profile-role{font-size:14px;color:#ccfbf1;margin-bottom:20px;}
+.profile-panel p{margin:5px 0;font-size:14px;}
+.profile-panel hr{margin:15px 0;border-color:#22c55e;}
+.logout-btn{margin-top:auto;width:100%;padding:12px;border:none;border-radius:20px;background:#ef4444;color:white;font-size:15px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.3s;}
+.logout-btn:hover{background:#dc2626;transform:translateY(-2px);}
+
+/* ====== RIGHT CONTENT PANEL ====== */
+.content-panel{flex:1;padding:35px;overflow-y:auto;}
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:25px;}
+.menu button{padding:15px;border:none;border-radius:15px;background:white;cursor:pointer;font-size:16px;font-weight:500;color:#0f766e;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(0,0,0,0.12);transition:0.3s;}
+.menu button:hover{transform:translateY(-4px);}
+.menu button.active{background:#22c55e;color:#022c22;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* ====== CARDS ====== */
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+.card h2{color:#0f766e;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+thead{background:#0f766e;color:white;}
+th,td{padding:14px;text-align:left;}
+th{font-weight:600;font-size:14px;}
+tbody tr{border-bottom:1px solid #f0f0f0;}
+tbody tr:hover{background:#f9fafb;}
+.status-badge{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+.status-yellow{background:#fff5cc;color:#b26a00;}
+.status-green{background:#dcfce7;color:#15803d;}
+.status-red{background:#fee2e2;color:#b91c1c;}
+.action-btn{padding:6px 12px;background:#16a34a;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;transition:0.2s;}
+.action-btn:hover{background:#15803d;}
+.delete-btn{padding:6px 12px;background:#e74c3c;color:white;border:none;border-radius:6px;cursor:pointer;}
+.delete-btn:hover{background:#c0392b;}
+
+#photoInput{
+display:none;
+}
+
+.delete-btn:hover{
+background:#b91c1c;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat-card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.stat-card i{
+font-size:24px;
+color:#0f766e;
+margin-bottom:8px;
+}
+
+.stat-card h3{
+font-size:22px;
+color:#022c22;
+}
+
+.stat-card p{
+font-size:13px;
+color:#666;
+}
+
+.profile-panel p{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:14px;
+margin:6px 0;
+}
+
+.welcome-box {
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.welcome-box h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.welcome-box p {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+.profile-details-box {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+}
+.profile-panel p {
+    margin: 8px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-panel strong {
+    color: #ccfbf1;
+}
+
+.profile-panel hr {
+    margin: 18px 0;
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #ccfbf1;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.profile-panel {
+    text-align: left;
+}
+
+.profile-panel p span {
+    color: #e0f2f1;
+}
+
+.about-card {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #e0f2f1;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+.about-card h4 {
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: #ccfbf1;
+}
+
+.about-card p {
+    line-height: 1.4;
+}
+.profile-panel {
+    width: 300px;
+    background: linear-gradient(180deg,#0f766e,#115e59);
+    color: white;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 20px;
+}
+
+.profile-card {
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.profile-card p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin: 6px 0;
+    color: #e0f7f4;
+}
+
+.aarogya-info {
+    margin: 15px 0;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #ccfbf1;
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #ccfbf1;
+    margin-bottom: 15px;
+}
+/* Responsive */
+@media(max-width:900px){.menu{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+
+<body>
+
+<!-- LEFT PROFILE -->
+<div class="profile-panel">
+    <div class="profile-pic-container">
+        <img id="profilePhoto" src="https://via.placeholder.com/130">
+        <label for="photoInput" class="change-photo-btn"><i class="fa-solid fa-camera"></i></label>
+        <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto()">
+    </div>
+    <div class="profile-name" id="fullName">Loading...</div>
+    <div class="profile-role" id="role">Loading...</div>
+   
+<div class="profile-details-box">
+<p><i class="fa-solid fa-phone"></i> <strong>Phone:</strong> <span id="phone"></span></p>
+
+<p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <span id="email"></span></p>
+
+<p><i class="fa-solid fa-location-dot"></i> <strong>Area:</strong> <span id="area"></span></p>
+
+<p><i class="fa-solid fa-hospital"></i> <strong>Health Center:</strong> <span id="healthCenter"></span></p>
+</div>
+
+<p><i class="fa-solid fa-users"></i> <strong>ASHA Workers:</strong> <span id="profileAshaCount">0</span></p>
+
+<p><i class="fa-solid fa-user-plus"></i> <strong>Beneficiaries:</strong> <span id="profileBeneficiaryCount">0</span></p>
+
+<div class="about-card">
+    <h4>🌿 About Aarogya Abhaya</h4>
+    <p>
+        Aarogya Abhaya is a community health initiative aimed at improving
+        awareness, healthcare access, and well-being for all.
+        We believe in preventive care and healthy living.
+    </p>
+</div>
+
+    <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+</div>
+
+<!-- RIGHT CONTENT -->
+<div class="content-panel">
+    <div class="welcome-box">
+    <h2>👋 Welcome, <span id="welcomeName">User</span>!</h2>
+    <p>Manage ASHA workers and beneficiaries efficiently.</p>
+</div>
+    <div class="stats">
+    <div class="stat-card">
+        <i class="fa-solid fa-users"></i>
+        <h3 id="totalAsha">0</h3>
+        <p>Total ASHA Workers</p>
+    </div>
+
+    <div class="stat-card">
+        <i class="fa-solid fa-user-plus"></i>
+        <h3 id="totalBeneficiaries">0</h3>
+        <p>Total Beneficiaries</p>
+    </div>
+
+    <div class="stat-card">
+        <i class="fa-solid fa-clock"></i>
+        <h3 id="pendingBeneficiaries">0</h3>
+        <p>Pending Approvals</p>
+    </div>
+
+    <div class="stat-card">
+        <i class="fa-solid fa-check"></i>
+        <h3 id="approvedBeneficiaries">0</h3>
+        <p>Approved</p>
+    </div>
+</div>
+    <!-- MENU -->
+    <div class="menu">
+        <button class="active" onclick="showSection('ashaWorkers',this)">
+            <i class="fa-solid fa-users"></i> ASHA Workers
+        </button>
+        <button onclick="showSection('beneficiaries',this)">
+            <i class="fa-solid fa-user-plus"></i> Beneficiaries
+        </button>
+        <button onclick="showSection('approvedBeneficiariesSection',this)">
+    <i class="fa-solid fa-check"></i> Approved Beneficiaries
+</button>
+    </div>
+
+    <!-- ASHA WORKERS SECTION -->
+    <!-- ASHA WORKERS SECTION -->
+<div id="ashaWorkers" class="section active">
+    <div class="card">
+        <h2>👩‍⚕️ ASHA Workers under your supervision</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody id="ashaTableBody">
+                <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <!-- BENEFICIARIES SECTION -->
+    <!-- BENEFICIARIES SECTION -->
+<div id="beneficiaries" class="section">
+    <input 
+type="text" 
+id="searchBeneficiary" 
+placeholder="Search beneficiary..." 
+style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:1px solid #ddd"
+onkeyup="searchBeneficiary()"
+>
+    <div class="card">
+        <h2>🧑‍🍼 Beneficiaries Registered by ASHA Workers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Registered By</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Age</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="beneficiaryTableBody">
+                <tr><td colspan="8">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="approvedBeneficiariesSection" class="section">
+    <div class="card">
+        <h2>✅ Approved Beneficiaries</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Registered By</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody id="approvedBeneficiaryBody">
+                <tr><td colspan="6">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<script>
+/* ====== LOAD PROFILE ====== */
+async function loadProfile() {
+    try {
+        const res = await fetch("/me");
+
+        if(!res.ok){
+            window.location.href="/login.html";
+            return;
+        }
+
+        const data = await res.json();
+
+        document.getElementById("profilePhoto").src =
+            data.profile_photo || "https://via.placeholder.com/130";
+
+        document.getElementById("fullName").innerText =
+            data.full_name || data.username;
+
+        document.getElementById("role").innerText =
+            data.role.replace("_"," ").toUpperCase();
+
+        
+
+        document.getElementById("email").innerText =
+            data.email || "Not provided";
+
+        document.getElementById("phone").innerText =
+            data.phone || "Not provided";
+
+        document.getElementById("area").innerText =
+            data.area || "Assigned by Admin";
+
+        document.getElementById("healthCenter").innerText =
+            data.health_center || "PHC";
+
+        document.getElementById("welcomeName").innerText =
+    data.full_name || data.username || "User";
+
+    } catch(err){
+        console.error(err);
+    }
+}
+loadProfile();
+loadAshaWorkers();
+
+/* ====== UPLOAD PHOTO ====== */
+async function uploadPhoto() {
+    const file = document.getElementById("photoInput").files[0];
+    if(!file) return;
+    const fd = new FormData(); fd.append("photo",file);
+    const res = await fetch("/upload-photo",{method:"POST",body:fd});
+    const data = await res.json();
+    if(data.success){ document.getElementById("profilePhoto").src = data.photo; alert("Profile photo updated"); } 
+    else alert("Upload failed");
+}
+
+/* ====== LOGOUT ====== */
+async function logout() {
+    await fetch("/logout",{method:"POST"});
+    window.location.href="/login.html";
+}
+
+/* ====== MENU SWITCH ====== */
+function showSection(id, btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if(id==="ashaWorkers") loadAshaWorkers();
+    if(id==="beneficiaries") loadBeneficiaries();
+    if(id==="approvedBeneficiariesSection") loadApprovedBeneficiaries();
+}
+
+/* ====== LOAD ASHA WORKERS ====== */
+async function loadAshaWorkers(){
+    try{
+        const res = await fetch("/jpha/asha-workers",{credentials:"same-origin"});
+        if(!res.ok) throw new Error("Failed to fetch");
+
+        const data = await res.json();
+
+        // Update ASHA count
+        document.getElementById("totalAsha").innerText = data.length;
+        document.getElementById("profileAshaCount").innerText = data.length;
+
+        const tbody = document.getElementById("ashaTableBody");
+        tbody.innerHTML="";
+
+        if(!data || data.length===0){
+            tbody.innerHTML=`<tr><td colspan="4">No ASHA workers found</td></tr>`;
+            return;
+        }
+
+        data.forEach(a=>{
+            tbody.innerHTML += `
+            <tr>
+                <td>${a.full_name}</td>
+                <td>${a.phone || "N/A"}</td>
+                <td>${a.email || "N/A"}</td>
+                <td>${a.address || "N/A"}</td>
+            </tr>`;
+        });
+
+    }catch(err){
+        console.error(err);
+        document.getElementById("ashaTableBody").innerHTML =
+        `<tr><td colspan="4">Error loading ASHA workers</td></tr>`;
+    }
+}
+
+/* ====== LOAD BENEFICIARIES ====== */
+async function loadBeneficiaries(){
+    try{
+        const res = await fetch("/jpha/beneficiaries",{credentials:"same-origin"});
+        if(!res.ok) throw new Error("Failed to fetch");
+
+        
+        const data = await res.json();
+updateStats(data);
+        const tbody = document.getElementById("beneficiaryTableBody");
+        tbody.innerHTML="";
+
+        if(!data || data.length===0){
+            tbody.innerHTML=`<tr><td colspan="8">No beneficiaries found</td></tr>`;
+            return;
+        }
+
+        data.forEach(b=>{
+            const age = b.dob ? calculateAge(b.dob) : "N/A";
+
+            let statusClass="";
+            if(b.approval_status==="pending") statusClass="status-yellow";
+            if(b.approval_status==="approved") statusClass="status-green";
+            if(b.approval_status==="rejected") statusClass="status-red";
+
+            tbody.innerHTML += `
+            <tr>
+                <td>${b.full_name}</td>
+                <td>${b.registered_by}</td>
+                <td>${b.role.replace("_"," ")}</td>
+                <td>${b.phone || "N/A"}</td>
+                <td>${b.address || "N/A"}</td>
+                <td>${age}</td>
+                <td>
+                    <span class="status-badge ${statusClass}">
+                        ${b.approval_status.toUpperCase()}
+                    </span>
+                </td>
+                <td>
+                    ${b.approval_status==="pending"
+                        ? `<button class="action-btn" onclick="approveBeneficiary(${b.id})">Approve</button>
+                           <button class="delete-btn" onclick="rejectBeneficiary(${b.id})">Reject</button>`
+                        : "-"
+                    }
+                </td>
+            </tr>`;
+        });
+
+    }catch(err){
+        console.error(err);
+        document.getElementById("beneficiaryTableBody").innerHTML =
+        `<tr><td colspan="8">Error loading beneficiaries</td></tr>`;
+    }
+    
+}
+/* ====== AGE CALCULATION ====== */
+function calculateAge(dob){
+    const birth=new Date(dob); const today=new Date();
+    let years=today.getFullYear()-birth.getFullYear();
+    let months=today.getMonth()-birth.getMonth();
+    let days=today.getDate()-birth.getDate();
+    if(days<0){months--;days+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}
+    if(months<0){years--;months+=12;}
+    if(years===0){return `${months}m ${days}d`;}
+    return `${years}y`;
+}
+
+
+async function approveBeneficiary(beneficiaryId) {
+  await fetch(`/jpha/approve-beneficiary/${beneficiaryId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "approve" })
+  });
+  loadBeneficiaries(); // refresh the table
+}
+
+async function rejectBeneficiary(beneficiaryId) {
+
+if(!confirm("Are you sure you want to reject this beneficiary?")) return;
+
+await fetch(`/jpha/approve-beneficiary/${beneficiaryId}`,{
+method:"POST",
+headers:{ "Content-Type":"application/json"},
+body:JSON.stringify({action:"reject"})
+});
+
+loadBeneficiaries();
+}
+
+function searchBeneficiary(){
+
+const input = document.getElementById("searchBeneficiary").value.toLowerCase();
+
+const rows = document.querySelectorAll("#beneficiaryTableBody tr");
+
+rows.forEach(row=>{
+
+const text = row.innerText.toLowerCase();
+
+row.style.display = text.includes(input) ? "" : "none";
+
+});
+
+}
+
+function updateStats(beneficiaries){
+
+document.getElementById("totalBeneficiaries").innerText = beneficiaries.length;
+document.getElementById("profileBeneficiaryCount").innerText = beneficiaries.length;
+
+let pending = beneficiaries.filter(b=>b.approval_status==="pending").length;
+let approved = beneficiaries.filter(b=>b.approval_status==="approved").length;
+
+document.getElementById("pendingBeneficiaries").innerText = pending;
+document.getElementById("approvedBeneficiaries").innerText = approved;
+
+}
+
+async function loadApprovedBeneficiaries() {
+    try {
+        const res = await fetch("/jpha/beneficiaries", { credentials: "same-origin" });
+        if (!res.ok) return;
+
+        const data = await res.json();
+        const tbody = document.getElementById("approvedBeneficiaryBody");
+        tbody.innerHTML = "";
+
+        const approved = data.filter(b => b.approval_status === "approved");
+
+        if (approved.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6">No approved beneficiaries</td></tr>`;
+            return;
+        }
+
+        approved.forEach(b => {
+            const age = b.dob ? calculateAge(b.dob) : "N/A";
+
+            tbody.innerHTML += `
+            <tr>
+                <td>${b.full_name}</td>
+                <td>${b.registered_by}</td>
+                <td>${b.role.replace("_"," ")}</td>
+                <td>${b.phone || "N/A"}</td>
+                <td>${b.address || "N/A"}</td>
+                <td>${age}</td>
+            </tr>`;
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+</script>
+</body>
+</html>

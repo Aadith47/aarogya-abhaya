@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Newborn Baby Dashboard | Aarogya Abhaya</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+    background:linear-gradient(120deg,#ecfeff,#f0fdfa);
+    min-height:100vh;
+}
+
+.dashboard{display:flex;padding:25px;gap:25px;}
+
+/* PROFILE */
+.profile{
+    width:300px;
+    background:linear-gradient(160deg,#0284c7,#38bdf8);
+    color:white;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
+
+.profile img{
+    width:120px;height:120px;border-radius:50%;
+    display:block;margin:0 auto 15px;border:4px solid white;
+}
+
+/* .profile h2,{text-align:center;} */
+.profile p{font-size:14px;opacity:0.9;}
+
+.profile hr{margin:18px 0;border:1px solid rgba(255,255,255,0.3);}
+.profile ul{list-style:none;}
+.profile ul li{margin:12px 0;font-size:14px;}
+.profile ul li i{margin-right:8px;}
+
+/* MAIN */
+.main{flex:1;}
+
+.header{
+    background:white;padding:25px;border-radius:25px;
+    margin-bottom:25px;box-shadow:0 10px 22px rgba(0,0,0,0.12);
+}
+.header h1{color:#0369a1;}
+.header p{color:#555;margin-top:6px;}
+
+/* ACTION GRID */
+.action-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px; /* space after the cards */
+}
+
+.action-card{
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.action-card:hover{transform:translateY(-8px);}
+.action-card i{
+    font-size: 35px;
+    margin-bottom: 12px;
+    color: #4CAF50;
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 50%;
+}
+.action-card h3{color:#0369a1;}
+.action-card:nth-child(1) i{
+    color:#ff6b6b;
+    background:#ffecec;
+}
+
+.action-card:nth-child(2) i{
+    color:#4CAF50;
+    background:#e8f5e9;
+}
+
+.action-card:nth-child(3) i{
+    color:#2196F3;
+    background:#e3f2fd;
+}
+
+.action-card:nth-child(4) i{
+    color:#ff9800;
+    background:#fff3e0;
+}
+
+.action-card:nth-child(5) i{
+    color:#9c27b0;
+    background:#f3e5f5;
+}
+/* FEATURES */
+.feature{
+    display:none;background:white;padding:25px;
+    border-radius:22px;box-shadow:0 10px 22px rgba(0,0,0,0.15);
+    margin-bottom:25px;
+}
+.feature h3{color:#0369a1;margin-bottom:10px;}
+
+/* HEALTH CORNER */
+.health-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:25px;margin-bottom:25px;
+}
+
+.health-card{
+    background:linear-gradient(160deg,#e0f2fe,#ffffff);
+    padding:25px;border-radius:22px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+}
+.health-card h3{color:#0369a1;margin-bottom:10px;}
+
+.motivation{
+    background:linear-gradient(160deg,#bae6fd,#e0f2fe);
+    padding:30px;border-radius:25px;
+    box-shadow:0 10px 22px rgba(0,0,0,0.15);
+}
+
+.profile-pic img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+}
+/* PROFILE PHOTO STYLING */
+.profile-pic-container{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+}
+
+.profile-pic-container img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+}
+
+/* HIDE FILE INPUT */
+#photoInput{
+    display:none;
+}
+
+/* CAMERA BUTTON */
+.change-photo-btn{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    background:#14b8a6;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.change-photo-btn:hover{
+    background:#0f766e;
+    transform:scale(1.1);
+}
+
+.change-photo-btn i{
+    font-size:16px;
+}
+/* PROFILE PHOTO STYLING */
+.profile-pic-container{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin:0 auto 15px;
+}
+
+.profile-pic-container img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+}
+
+/* HIDE FILE INPUT */
+#photoInput{
+    display:none;
+}
+
+/* CAMERA BUTTON */
+.change-photo-btn{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    width:38px;
+    height:38px;
+    background:#14b8a6;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+
+.change-photo-btn:hover{
+    background:#0f766e;
+    transform:scale(1.1);
+}
+
+.change-photo-btn i{
+    font-size:16px;
+}
+
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* SETTINGS FEATURE CARD */
+#settings {
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+    max-width: 420px;
+}
+
+/* HEADINGS */
+#settings h3 {
+    color: #0f766e;
+    margin-bottom: 15px;
+}
+
+/* FORM GROUP */
+#settings .form-group {
+    margin-bottom: 16px;
+}
+
+/* LABEL */
+#settings label {
+    display: block;
+    font-weight: 500;
+    color: #134e4a;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* INPUT */
+#settings input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #94a3b8;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* INPUT FOCUS */
+#settings input:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20,184,166,0.2);
+}
+
+/* UPDATE BUTTON */
+#settings .action-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #022c22;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+#settings .action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(34,197,94,0.4);
+}
+
+/* BUTTON ACTIVE */
+#settings .action-btn:active {
+    transform: scale(0.98);
+}
+
+/* vaccinations */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.profilecard {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.profilecard h2 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.vaccination-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.vaccine-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.vaccine-table th {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+}
+
+.vaccine-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.completed {
+    background-color: #27ae60;
+}
+
+.pending {
+    background-color: #f39c12;
+}
+
+.overdue {
+    background-color: #e74c3c;
+}
+
+.profile-details{
+    list-style:none;
+    padding:0;
+    margin-top:10px;
+}
+
+.profile-details li{
+    background:rgba(255,255,255,0.15);
+    padding:8px 10px;
+    border-radius:10px;
+    margin-bottom:8px;
+    font-size:13px;
+}
+
+/* WELCOME CARD */
+.welcome-card{
+    margin-top:15px;
+    padding:12px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#7dd3fc,#38bdf8);
+    text-align:center;
+    box-shadow:0 6px 12px rgba(0,0,0,0.15);
+}
+
+.welcome-card h3{
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.welcome-card p{
+    font-size:12px;
+    opacity:0.9;
+}
+.profile p{
+    font-size:13px;
+    opacity:0.95;
+    margin:4px 0;
+}
+
+.profile-detail {
+    text-align: left;
+    margin-top: 10px;
+}
+#fullName{
+    text-align: center;
+}
+#role{
+    text-align: center;
+}
+
+.alert-box{
+    background: #fff3cd;
+    border-left: 6px solid #f59e0b;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #7c2d12;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-box i{
+    font-size: 20px;
+    color: #f59e0b;
+}
+
+.notification{
+    position:absolute;
+    top:25px;
+    right:30px;
+    cursor:pointer;
+}
+
+.notification i{
+    font-size:22px;
+    color:#0369a1;
+}
+
+.badge{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:3px 6px;
+    border-radius:50%;
+}
+
+.notification-dropdown{
+    display:none;
+    position:absolute;
+    right:0;
+    top:35px;
+    width:250px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.2);
+    padding:10px;
+    z-index:100;
+}
+
+.notification-dropdown h4{
+    margin-bottom:8px;
+    color:#0369a1;
+}
+
+.notification-dropdown ul{
+    list-style:none;
+    padding:0;
+}
+
+.notification-dropdown li{
+    padding:8px;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+}
+
+.notice-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f0fdfa;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.notice-message{
+    font-size:15px;
+    color:#333;
+    max-width:65%;
+}
+
+.notice-info{
+    text-align:right;
+    font-size:13px;
+    color:#555;
+}
+
+/* container for the buttons */
+#deficiency-options{
+    display:flex;
+    width:100%;
+    gap:30px;              /* space between buttons */
+    margin-top:15px;
+}
+
+.option-btn{
+    flex:1;                /* both buttons take equal space */
+    padding:25px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* Image button */
+.option-btn:first-child{
+    background:#ffecec;
+    color:#ff6b6b;
+}
+
+/* Text button */
+.option-btn:last-child{
+    background:#e3f2fd;
+    color:#2196F3;
+}
+
+.option-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- PROFILE -->
+<div class="profile">
+
+    <!-- PROFILE PHOTO -->
+    <div class="profile-pic-container">
+        <img id="profilePhoto" src="https://via.placeholder.com/130">
+
+        <label for="photoInput" class="change-photo-btn">
+            <i class="fa-solid fa-camera"></i>
+        </label>
+
+        <input type="file" id="photoInput" accept="image/*" onchange="uploadPhoto()">
+    </div>
+
+    <!-- NAME + ROLE -->
+    <h2 id="fullName">Loading...</h2>
+    <p id="role">Loading...</p>
+
+    <!-- BASIC DETAILS -->
+    <div class="profile-detail">
+    <p><strong>Username:</strong> <span id="username"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>Phone:</strong> <span id="phone"></span></p>
+    <p><strong>Age:</strong> <span id="age"></span></p>
+    <p><strong>Ward / Area:</strong> <span id="area"></span></p>
+</div> 
+    <hr>
+
+    <!-- EXTRA PROFILE DETAILS -->
+    <ul class="profile-details">
+        <li><i class="fa-solid fa-calendar"></i> DOB: <span id="dob"></span></li>
+        <li><i class="fa-solid fa-droplet"></i> Blood Group: <span id="bloodGroup"></span></li>
+        <li><i class="fa-solid fa-location-dot"></i> Address: <span id="address"></span></li>
+    </ul>
+
+    <!-- WELCOME CARD -->
+    <div class="welcome-card">
+        <h3>👋 Welcome back, <span id="welcomeName"></span>!</h3>
+        <p>
+            Stay consistent with your healthy habits.
+            Every small step matters 💚
+        </p>
+    </div>
+
+    <!-- LOGOUT -->
+    <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+
+</div>
+<!-- MAIN -->
+<div class="main">
+
+<div class="header">
+    <h1>Newborn Health Dashboard</h1>
+    <p>Early detection, growth monitoring, and guidance</p>
+    <div class="notification">
+    <i class="fa-solid fa-bell" onclick="toggleNotifications()"></i>
+    <span class="badge" id="notificationCount">0</span>
+
+    <div class="notification-dropdown" id="notificationDropdown">
+        <h4>Reminders</h4>
+        <ul id="notificationList"></ul>
+    </div>
+</div>
+</div>
+<div class="alert-box" id="reminderBox">
+    <i class="fa-solid fa-bell"></i>
+    <span id="reminderText">Loading reminders...</span>
+</div>
+
+<!-- ACTIONS -->
+<div class="action-grid">
+    
+    <div class="action-card" onclick="showFeature('deficiency')">
+        <i class="fa-solid fa-vial"></i>
+        <h3>Deficiency Check</h3>
+        <p>Vitamin & nutrition status</p>
+    </div>
+
+    <div class="action-card" onclick="showFeature('care')">
+    <i class="fa-solid fa-hand-holding-heart"></i>
+    <h3>Care & Comfort</h3>
+    <p>Daily loving care tips</p>
+</div>
+
+    <div class="action-card" onclick="showFeature('notice')">
+        <i class="fa-solid fa-bullhorn"></i>
+        <h3>Notice Board</h3>
+        <p>Health alerts</p>
+    </div>
+<div class="action-card" onclick="showFeature('settings')">
+   <i class="fa-solid fa-gear"></i>
+    <h3>Settings</h3>
+    <p>Account preferences</p>
+    
+</div>
+<div class="action-card" onclick="showFeature('vaccine')">
+   <i class="fa-solid fa-syringe"></i>
+    <h3>Vaccination Tracking</h3>
+   
+    
+</div>
+
+</div>
+
+
+<!-- FEATURES -->
+<div id="deficiency" class="feature">
+<h3>🧪 Deficiency Checking</h3>
+
+<div id="deficiency-options" style="display:none;">
+
+<button class="option-btn" onclick="openImageCheck()">
+📷 Image Based Deficiency Check
+</button>
+
+<button class="option-btn" onclick="openHealthCheck()">
+📝 Text Based Deficiency Check
+</button>
+
+</div>
+</div>
+
+<div id="growth" class="feature">
+    <h3>📈 Growth Monitoring</h3>
+    <ul>
+        <li>Monthly weight comparison</li>
+        <li>Head circumference tracking</li>
+        <li>Height-for-age evaluation</li>
+    </ul>
+</div>
+
+
+<div id="care" class="feature">
+    <h3>🤍 Newborn Care & Comfort</h3>
+    <ul>
+        <li>✔ Skin-to-skin bonding daily</li>
+        <li>✔ Gentle massage for relaxation</li>
+        <li>✔ Maintain warm & calm environment</li>
+        <li>✔ Responsive feeding & soothing</li>
+        <li>✔ Ensure proper sleep routine</li>
+    </ul>
+
+    <p style="margin-top:15px;font-style:italic;color:#555;">
+        “Love, warmth, and care are the strongest medicines for a newborn.”
+    </p>
+</div>
+
+
+<div id="notice" class="feature">
+    <h3>📢 Notice Board</h3>
+    <div id="noticeList">Loading notices...</div>
+</div>
+
+
+ <div id="settings" class="feature">
+    <h3>⚙️ Settings</h3>
+    <h3>🔐 Change Password</h3>
+
+    <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" id="currentPassword" placeholder="Enter current password">
+    </div>
+
+    <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="newPassword" placeholder="Enter new password">
+    </div>
+
+    <button type="button" class="action-btn" onclick="changePassword()">
+        Update Password
+    </button>
+    </div> 
+
+
+    <div id="vaccine" class="feature">
+       <div class="dashboard-container">
+
+    <div class="profilecard">
+        <h2 id="babyName">Baby Name</h2>
+        <p><strong>Date of Birth:</strong> <span id="babyDob"></span></p>
+    </div>
+
+    <div class="vaccination-card">
+        <h3>Vaccination Schedule</h3>
+
+        <table class="vaccine-table">
+            <thead>
+                <tr>
+                    <th>Vaccine</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="vaccineTable"></tbody>
+        </table>
+    </div>
+
+</div></div>
+
+<!-- HEALTH CORNER -->
+<div class="health-grid">
+
+    <div class="health-card">
+        <h3>👶 Health Tip</h3>
+        <p id="babyTip"></p>
+    </div>
+
+    <div class="health-card">
+        <h3>✅ Do’s & ❌ Don’ts</h3>
+        <ul>
+            <li>✔ Exclusive breastfeeding</li>
+            <li>✔ Sunlight exposure</li>
+            <li>❌ Honey or water</li>
+            <li>❌ Delayed checkups</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="motivation">
+    <h3>💙 Gentle Reminder</h3>
+    <p>
+        Early deficiency detection ensures healthy physical and mental
+        development. Small checks today prevent big problems tomorrow.
+    </p>
+</div>
+
+</div>
+</div>
+
+<script>
+        function openHealthCheck(){
+    window.location.href = "http://localhost:3001/health-check";
+}
+
+
+
+function openImageCheck(){
+    window.open("http://localhost:8501","_blank");
+}
+
+
+
+
+
+
+function showFeature(id){
+
+
+    document.querySelectorAll('.feature').forEach(f => f.style.display='none');
+    document.getElementById(id).style.display='block';
+
+    if(id === "notice"){
+        loadNotices();
+    }
+
+    if(id === "deficiency"){
+        document.getElementById("deficiency-options").style.display = "flex";
+    }
+}
+
+
+const babyTips=[
+"Vitamin D helps in bone development ☀️",
+"Early growth tracking prevents malnutrition 📈",
+"Exclusive breastfeeding boosts immunity 🍼",
+"Regular checkups ensure healthy milestones 👶"
+];
+
+document.getElementById("babyTip").innerText=
+babyTips[Math.floor(Math.random()*babyTips.length)];
+
+
+// notices
+async function loadNotices() {
+    const res = await fetch("/notices");
+    const data = await res.json();
+
+    const container = document.getElementById("noticeList");
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No notices yet</p>";
+        return;
+    }
+
+    data.forEach(n => {
+        container.innerHTML += `
+            <div class="notice-card">
+                <p>${n.message}</p>
+                <small>
+                    — ${n.full_name || "ASHA"},
+                    ${new Date(n.created_at).toLocaleString()}
+                </small>
+            </div>
+        `;
+    });
+}
+loadNotices();
+
+
+function calculateAge(dob){
+    const birth = new Date(dob);
+    const today = new Date();
+
+    let years = today.getFullYear() - birth.getFullYear();
+    let months = today.getMonth() - birth.getMonth();
+    let days = today.getDate() - birth.getDate();
+
+    if (days < 0) {
+        months--;
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    if (years === 0) {
+        return `${months} months ${days} days`;
+    }
+
+    return `${years} years`;
+}
+
+
+
+
+async function loadProfile() {
+
+    const res = await fetch("/me", {
+    credentials: "same-origin"
+});
+    const user = await res.json();
+
+    document.getElementById("fullName").innerText = user.full_name || "N/A";
+    document.getElementById("welcomeName").innerText = user.full_name || "";
+
+    document.getElementById("role").innerText = user.role || "Beneficiary";
+
+    document.getElementById("username").innerText = user.username || "N/A";
+    document.getElementById("email").innerText = user.email || "N/A";
+    document.getElementById("phone").innerText = user.phone || "N/A";
+    document.getElementById("area").innerText =
+        user.area || "Not assigned";
+
+    document.getElementById("dob").innerText =
+        user.dob ? new Date(user.dob).toLocaleDateString() : "N/A";
+
+    document.getElementById("bloodGroup").innerText = user.blood_group || "N/A";
+
+    document.getElementById("address").innerText = user.address || "N/A";
+
+    // Profile photo
+    if (user.profile_photo) {
+        document.getElementById("profilePhoto").src = user.profile_photo;
+    }
+
+    // Age calculation
+    if (user.dob) {
+        document.getElementById("age").innerText = calculateAge(user.dob);
+    } else {
+        document.getElementById("age").innerText = "N/A";
+    }
+}
+loadProfile();
+
+
+
+
+
+async function uploadPhoto(){
+    const f=photoInput.files[0];
+    if(!f)return;
+    const fd=new FormData();
+    fd.append("photo",f);
+    const r=await fetch("/upload-photo",{method:"POST",body:fd});
+    const d=await r.json();
+    if(d.success)profilePhoto.src=d.photo;
+}
+
+
+/* ---------------- LOAD NOTICES (BENEFICIARY) ---------------- */
+async function loadNotices() {
+    try {
+        const res = await fetch("/notices");
+
+        if (!res.ok) {
+            document.getElementById("noticeList").innerText =
+                "Unable to load notices";
+            return;
+        }
+
+        const data = await res.json();
+        const container = document.getElementById("noticeList");
+        container.innerHTML = "";
+
+        if (data.length === 0) {
+            container.innerHTML = "<p>No notices available</p>";
+            return;
+        }
+
+        data.forEach(n => {
+           container.innerHTML += `
+<div class="notice-card">
+
+    <div class="notice-message">
+        ${n.message}
+    </div>
+
+    <div class="notice-info">
+        <div>👤 ${n.sender_name || "ASHA"}</div>
+        <div>
+            📅 ${new Date(n.created_at).toLocaleDateString()}
+            ⏰ ${new Date(n.created_at).toLocaleTimeString()}
+        </div>
+    </div>
+
+</div>
+`;
+        });
+
+    } catch (err) {
+        console.error("Notice load error:", err);
+    }
+}
+loadNotices();
+
+async function logout() {
+    await fetch("/logout", {
+        method: "POST"
+    });
+
+    window.location.href = "/login.html";
+}
+
+fetch("/me").then(res => {
+    if (!res.ok) window.location.href = "/login.html";
+});
+
+
+// change password
+async function changePassword() {
+    console.log("Change password clicked");
+
+    const currentPassword =
+        document.getElementById("currentPassword").value.trim();
+    const newPassword =
+        document.getElementById("newPassword").value.trim();
+
+    if (!currentPassword || !newPassword) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    const res = await fetch("/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+            currentPassword,
+            newPassword
+        })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        alert(data.message || "Password change failed");
+        return;
+    }
+
+    alert("Password updated successfully");
+    window.location.href = "/login.html";
+}
+
+
+
+document.addEventListener("DOMContentLoaded", loadDashboard);
+
+async function loadDashboard() {
+
+    const res = await fetch("/api/newborn/vaccines");
+    const data = await res.json();
+
+    document.getElementById("babyName").innerText = data.baby.full_name;
+    document.getElementById("babyDob").innerText =
+        new Date(data.baby.dob).toDateString();
+
+    const table = document.getElementById("vaccineTable");
+    table.innerHTML = "";
+
+    data.vaccines.forEach(v => {
+
+        const today = new Date();
+        const dueDate = new Date(v.due_date);
+
+        let statusClass = "";
+        let statusText = "";
+
+        if (v.status === "completed") {
+            statusClass = "completed";
+            statusText = "Completed";
+        } 
+        else if (dueDate < today) {
+            statusClass = "overdue";
+            statusText = "Overdue";
+        } 
+        else {
+            statusClass = "pending";
+            statusText = "Pending";
+        }
+
+        table.innerHTML += `
+            <tr>
+                <td>${v.vaccine_name}</td>
+                <td>${dueDate.toDateString()}</td>
+                <td>
+                    <span class="status-badge ${statusClass}">
+                        ${statusText}
+                    </span>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// alert
+async function loadReminders(){
+
+    const res = await fetch("/api/newborn/vaccines");
+    const data = await res.json();
+
+    const today = new Date();
+    let message = "No urgent reminders today.";
+
+    for (let v of data.vaccines) {
+
+        const due = new Date(v.due_date);
+        const diff = Math.ceil((due - today)/(1000*60*60*24));
+
+        if(diff < 0 && v.status !== "completed"){
+            message = `❗ Overdue vaccine: ${v.vaccine_name}`;
+            break;
+        }
+
+        if(diff <= 3 && diff >= 0){
+            message = `⚠ Vaccination "${v.vaccine_name}" due in ${diff} day(s)!`;
+            break;
+        }
+    }
+
+    document.getElementById("reminderText").innerText = message;
+}
+loadReminders();
+let shown = false;
+
+data.vaccines.forEach(v => {
+
+    const due = new Date(v.due_date);
+    const diff = Math.ceil((due - today)/(1000*60*60*24));
+
+    if(diff <= 1 && diff >= 0 && !shown){
+        alert(`Reminder: ${v.vaccine_name} vaccination is due tomorrow.`);
+        shown = true;
+    }
+
+});
+function toggleNotifications(){
+    const box = document.getElementById("notificationDropdown");
+
+    if(box.style.display === "block"){
+        box.style.display = "none";
+    }else{
+        box.style.display = "block";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadNotifications();
+});
+
+async function loadNotifications(){
+
+    const res = await fetch("/api/newborn/vaccines");
+    const data = await res.json();
+
+    const list = document.getElementById("notificationList");
+    const badge = document.getElementById("notificationCount");
+
+    list.innerHTML = "";
+
+    let count = 0;
+    const today = new Date();
+
+    data.vaccines.forEach(v => {
+
+        const due = new Date(v.due_date);
+        const diff = Math.ceil((due - today)/(1000*60*60*24));
+
+        if(diff <= 3 && v.status !== "completed"){
+
+            list.innerHTML += `<li>💉 ${v.vaccine_name} due in ${diff} day(s)</li>`;
+            count++;
+        }
+
+    });
+
+    badge.innerText = count;
+
+    if(count === 0){
+        list.innerHTML = "<li>No reminders</li>";
+    }
+}
+
+loadNotifications();
+
+
+
+function openTextCheck(){
+    window.open("http://127.0.0.1:5000","_blank");
+}
+
+//function openImageCheck(){
+   // window.location.href = "/deficiency_image.html";
+//}
+
+
+
+
+
+</script>
+
+</body>
+</html>

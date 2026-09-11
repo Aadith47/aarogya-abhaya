@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aarogya Abhaya - Registration</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2a5298;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #1e3c72;
+    }
+
+    .jpha-select {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>📝 Staff Registration</h2>
+
+  <input id="username" placeholder="Username">
+<input id="full_name" placeholder="Full Name">
+<input id="email" placeholder="Email" type="email">
+<input id="phone" placeholder="Phone" type="tel" maxlength="10" pattern="[6-9]{1}[0-9]{9}" required>
+<input id="address" placeholder="Address">
+<input id="area" placeholder="Area">
+<input id="password" type="password" placeholder="Password">
+<select id="role" onchange="toggleJphaSelect()">
+  <option value="">Select Role</option>
+  <option value="asha_worker">ASHA Worker</option>
+  <option value="lha">LHA</option>
+  <option value="jpha">JPHA</option>
+</select>
+
+<!-- Only for ASHA -->
+<select id="jpha_id" class="jpha-select">
+  <option value="">Select your JPHA</option>
+</select>
+<!-- Only for JPHA -->
+<select id="lha_id" class="lha-select">
+  <option value="">Select your LHA</option>
+</select>
+
+
+<input id="code" placeholder="Registration Code">
+<button onclick="register()">Register</button>
+</div>
+
+<script>
+function toggleJphaSelect() {
+
+  const role = document.getElementById('role').value;
+
+  const jphaSelect = document.getElementById('jpha_id');
+  const lhaSelect = document.getElementById('lha_id');
+
+  jphaSelect.style.display = (role === 'asha_worker') ? 'block' : 'none';
+  lhaSelect.style.display = (role === 'jpha') ? 'block' : 'none';
+
+}
+// Load JPHAs for ASHA
+async function loadJphas() {
+  const res = await fetch('/get-jphas'); 
+  const jphas = await res.json();
+  const jphaSelect = document.getElementById('jpha_id');
+
+  jphas.forEach(jpha => {
+    const opt = document.createElement('option');
+    opt.value = jpha.id;
+    opt.textContent = `👨‍⚕️ ${jpha.full_name}`;
+    jphaSelect.appendChild(opt);
+  });
+}
+
+// Load LHAs for JPHA
+async function loadLhas() {
+  const res = await fetch('/get-lhas'); 
+  const lhas = await res.json();
+  const lhaSelect = document.getElementById('lha_id');
+
+  lhas.forEach(lha => {
+    const opt = document.createElement('option');
+    opt.value = lha.id;
+    opt.textContent = `👨‍⚕️ ${lha.full_name}`;
+    lhaSelect.appendChild(opt);
+  });
+}
+
+// Call on page load
+loadJphas();
+loadLhas();
+
+
+async function register() {
+
+  const username = document.getElementById("username").value.trim();
+  const full_name = document.getElementById("full_name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const area = document.getElementById("area").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const role = document.getElementById("role").value;
+  const code = document.getElementById("code").value.trim();
+
+  const jpha_id = document.getElementById("jpha_id").value;
+  const lha_id = document.getElementById("lha_id").value;
+
+  // REQUIRED FIELD CHECK
+  if(!username || !full_name || !email || !phone || !password || !role){
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  // NAME VALIDATION
+  const namePattern = /^[A-Za-z ]+$/;
+  if(!namePattern.test(full_name)){
+    alert("Full name should contain only letters.");
+    return;
+  }
+
+  // PHONE VALIDATION (exactly 10 digits)
+  const phonePattern = /^[6-9][0-9]{9}$/;
+  if(!phonePattern.test(phone)){
+    alert("Please enter a valid 10-digit mobile number starting with 6,7,8 or 9.");
+    return;
+  }
+
+  // EMAIL VALIDATION
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if(!emailPattern.test(email)){
+    alert("Enter a valid email address.");
+    return;
+  }
+
+  // PASSWORD LENGTH
+  if(password.length < 4){
+    alert("Password must be at least 4 characters.");
+    return;
+  }
+
+  // ROLE RELATION VALIDATION
+  if(role === "asha_worker" && !jpha_id){
+    alert("Please select a JPHA.");
+    return;
+  }
+
+  if(role === "jpha" && !lha_id){
+    alert("Please select an LHA.");
+    return;
+  }
+
+  const res = await fetch("/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username,
+      full_name,
+      email,
+      phone,
+      address,
+      area,
+      password,
+      role,
+      code,
+      jpha_id,
+      lha_id
+    })
+  });
+
+  const data = await res.json();
+  alert(data.message || data.error);
+}
+</script>
+
+</body>
+</html>

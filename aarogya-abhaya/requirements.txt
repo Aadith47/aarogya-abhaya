@@ -1,0 +1,17 @@
+# Python dependencies for Flask ML Server & Posture Detection
+# Install with: pip install -r requirements.txt
+
+# Flask ML Server (malnutrition detection)
+flask>=3.0.0
+streamlit>=1.30.0
+tensorflow>=2.15.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# Posture Detection (pregnant module)
+opencv-python>=4.8.0
+mediapipe>=0.10.0
+pyttsx3>=2.90
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
